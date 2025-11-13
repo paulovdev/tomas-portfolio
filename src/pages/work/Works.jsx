@@ -104,20 +104,20 @@ const Works = () => {
         {/* GRID COM LAYOUTGROUP */}
         <LayoutGroup>
           <motion.div
-            layout
-            transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
+            layout="position"
+            transition={{ duration: 0.25, ease: "linear" }}
             className={`grid ${gridClass} gap-4 z-10`}
           >
             {works.map((work, i) => (
               <motion.div
                 key={work._id}
-                layout="position" // ← mantém posição suave sem esticar
-                onClick={() => navigate(`/works/${work.slug.current}`)}
-                className="relative mb-10 group overflow-hidden cursor-pointer"
+                layout="position"
+                whileInView="animate"
+                viewport={{ once: true }}
                 variants={itemAnim}
-                initial="initial"
-                animate="animate"
                 custom={i}
+                className="relative mb-10 group overflow-hidden cursor-pointer"
+                onClick={() => navigate(`/works/${work.slug.current}`)}
               >
                 <img
                   loading="lazy"
