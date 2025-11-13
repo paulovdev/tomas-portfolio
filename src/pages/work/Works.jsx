@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom";
 import Lenis from "lenis";
 import client from "../../../client";
 import Footer from "../../components/Footer";
-import { motion, LayoutGroup } from "framer-motion";
+import { motion } from "framer-motion";
 import { HiOutlineSquaresPlus, HiOutlineSquares2X2 } from "react-icons/hi2";
 
 const itemAnim = {
   initial: { opacity: 0, y: 10 },
-  animate: (i) => ({
+  animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, delay: i * 0.04 },
-  }),
+    transition: { duration: 0.4 },
+  },
 };
 
 const Works = () => {
@@ -43,10 +43,7 @@ const Works = () => {
           title,
           year,
           slug,
-          images[0]{
-            alt,
-            "url": asset->url
-          }
+          images[0]{ alt, "url": asset->url }
         }`
       )
       .then((data) => {
@@ -101,43 +98,36 @@ const Works = () => {
           </div>
         </div>
 
-        {/* GRID COM LAYOUTGROUP */}
-        <LayoutGroup>
-          <motion.div
-            layout="position"
-            transition={{ duration: 0.25, ease: "linear" }}
-            className={`grid ${gridClass} gap-4 z-10`}
-          >
-            {works.map((work, i) => (
-              <motion.div
-                key={work._id}
-                layout="position"
-                whileInView="animate"
-                viewport={{ once: true }}
-                variants={itemAnim}
-                custom={i}
-                className="relative mb-10 group overflow-hidden cursor-pointer"
-                onClick={() => navigate(`/works/${work.slug.current}`)}
-              >
-                <img
-                  loading="lazy"
-                  src={work.images?.url}
-                  alt={work.images?.alt || work.title}
-                  className="w-full h-[500px] object-cover brightness-75 group-hover:brightness-100 transition-all duration-500 max-lg:h-[350px] max-md:h-[250px]"
-                />
+        {/* GRID SEM LAYOUT ANIMATION */}
+        <div className={`grid ${gridClass} gap-4 z-10`}>
+          {works.map((work, i) => (
+            <motion.div
+              key={work._id}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              variants={itemAnim}
+              className="relative mb-10 group overflow-hidden cursor-pointer"
+              onClick={() => navigate(`/works/${work.slug.current}`)}
+            >
+              <img
+                loading="lazy"
+                src={work.images?.url}
+                alt={work.images?.alt || work.title}
+                className="w-full h-[500px] object-cover brightness-75 group-hover:brightness-100 transition-all duration-500 max-lg:h-[350px] max-md:h-[250px]"
+              />
 
-                <div className="relative mt-2">
-                  <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                    {work.title}
-                  </h2>
-                  <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                    {work.year}
-                  </h2>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </LayoutGroup>
+              <div className="relative mt-2">
+                <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
+                  {work.title}
+                </h2>
+                <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
+                  {work.year}
+                </h2>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       <Footer />
