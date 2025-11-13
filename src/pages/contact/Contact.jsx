@@ -21,18 +21,20 @@ const Contact = () => {
 
   return (
     <>
-      <section className="relative min-h-screen px-6 py-24 bg-white text-black">
-        <h2 className="mb-32 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.3]">
+      <section className="relative h-full py-24 bg-s">
+        <h2 className="px-4 max-w-[1000px] mb-32 text-[1.5em] font-medium tracking-[-0.03em] leading-[1.3]">
           For new project enquiries or questions regarding our approach and
           process, please feel free to reach out. While we are not actively
           hiring at this time, we are always interested in connecting with
           talented individuals, so folio submissions and open applications are
           welcome.
         </h2>
-
-        <div className="grid grid-cols-4 gap-8 border-t border-black/10 pt-8">
+        <div className="px-4 mb-20 grid grid-cols-4 gap-8 border-t border-black/10 pt-8">
           <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-            Contact
+            <div className=" flex items-center gap-2">
+              <span className="relative w-2 h-2 bg-p rounded-full" />
+              Contact
+            </div>
           </p>
           <div className="col-span-3 space-y-0.5">
             {contactInfo.map((line, i) => (
@@ -45,11 +47,26 @@ const Contact = () => {
             ))}
           </div>
         </div>
-        <AnimatePresence>
-          {showNewsletter && (
-            <ContactModal setShowNewsletter={setShowNewsletter} />
-          )}
-        </AnimatePresence>
+        <div className="relative">
+          <button
+            className={`absolute top-2 px-4 ${
+              showNewsletter ? "text-s" : "text-p"
+            } text-[1em] font-medium tracking-[-0.03em] flex items-center gap-2 z-20`}
+            onClick={() => setShowNewsletter(true)}
+          >
+            <span
+              className={`relative w-2 h-2 ${
+                showNewsletter ? "bg-s" : "bg-p "
+              } rounded-full`}
+            />{" "}
+            Newsletter
+          </button>{" "}
+          <AnimatePresence>
+            {showNewsletter && (
+              <ContactModal setShowNewsletter={setShowNewsletter} />
+            )}
+          </AnimatePresence>
+        </div>
       </section>
       <Footer />
     </>

@@ -17,22 +17,22 @@ function App() {
       <Nav />
       <AnimatePresence mode="wait">
         <Routes location={location} key={`${location.pathname}-${location}`}>
-          <Route index element={<Transition Page={Home} bg="#111111" />} />
+          <Route index element={<Transition Page={Home} bg="#fefefe" />} />
           <Route
             path="/works"
-            element={<Transition Page={Works} bg="#ffffff" />}
+            element={<Transition Page={Works} bg="#fefefe" />}
           />
           <Route
             path="/works/:workId"
-            element={<Transition Page={WorkView} bg="#111111" />}
+            element={<Transition Page={WorkView} bg="#fefefe" />}
           />
           <Route
             path="/about"
-            element={<Transition Page={About} bg="#111111" />}
+            element={<Transition Page={About} bg="#fefefe" />}
           />{" "}
           <Route
             path="/contact"
-            element={<Transition Page={Contact} bg="#ffffff" />}
+            element={<Transition Page={Contact} bg="#fefefe" />}
           />
         </Routes>
       </AnimatePresence>

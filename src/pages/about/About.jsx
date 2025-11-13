@@ -48,26 +48,52 @@ const About = () => {
   }, []);
   return (
     <>
-      <section className="relative min-h-screen px-6 py-24 bg-s text-p">
-        <h2 className="mb-32 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.3]">
+      <section className="relative h-full px-4 py-24 bg-s text-p">
+        <h2 className="max-w-[1000px] mb-32 text-[1.5em] font-medium tracking-[-0.03em] leading-[1.3]">
           A Melbourne-based branding and communication studio, BOTH operates at
           the intersection of creative expression and purposeful design. Our
           approach hinges on a genuine interest in the individuals and companies
           with which we choose to partner, leading to a considered understanding
-          of the needs and goals of each project. Our focus is on developing
-          enduring and genuine visual identities, with expertise encompassing
-          creative direction, packaging, digital design, spatial experiences,
-          and brand stewardship.
+          of the needs and goals of each project.
         </h2>
 
-        <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8">
+        <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8 max-md:grid-cols-1">
           <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-            Services
+            <div className="flex items-center gap-2">
+              <span className="relative w-2 h-2 bg-p rounded-full" />
+              Services
+            </div>
           </p>
+          <div className="max-md:grid max-md:grid-cols-3 max-md:gap-4 hidden">
+            {Object.entries(services).map(([category, items]) => (
+              <div key={category}>
+                <p className="mb-2 text-p text-[1em] font-semibold tracking-[-0.03em]">
+                  <div className=" flex items-center gap-2">
+                    <span className="relative w-1.5 h-1.5 bg-p " />
+                    {category}
+                  </div>
+                </p>
+                <ul className="space-y-0.5 text-[0.95em]">
+                  {items.map((item, i) => (
+                    <li
+                      key={i}
+                      className="text-p text-[1em] font-medium tracking-[-0.03em]"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
           {Object.entries(services).map(([category, items]) => (
-            <div key={category}>
+            <div key={category} className="max-md:hidden block">
               <p className="mb-2 text-p text-[1em] font-semibold tracking-[-0.03em]">
-                {category}
+                <div className=" flex items-center gap-2">
+                  <span className="relative w-1.5 h-1.5 bg-p " />
+                  {category}
+                </div>
               </p>
               <ul className="space-y-0.5 text-[0.95em]">
                 {items.map((item, i) => (
@@ -83,44 +109,53 @@ const About = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8">
+        <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8 max-md:grid-cols-1">
           <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-            Team
+            <div className=" flex items-center gap-2">
+              <span className="relative w-2 h-2 rounded-full bg-p " /> Team
+            </div>
           </p>
-          <p className="col-span-3 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.3]">
+          <p className="col-span-3 text-[1.5em] font-medium tracking-[-0.03em] leading-[1.3]">
             Established in 2010 by Sigiriya Brown and Dan Smith, BOTH emerged
             from a shared aspiration to engage more meaningfully with clients
             and collaborators throughout the design process. While the scale of
             our projects has grown over the years and our network of
             collaborators has expanded, this commitment to close involvement
-            remains a key emphasis of our approach. Regardless of a project’s
-            scale or complexity, we maintain oversight of every facet, from
-            initial conceptualisation to the ultimate delivery of final assets.
+            remains a key emphasis of our approach.
           </p>
         </div>
 
-        <div className="grid grid-cols-4 gap-8 border-t border-black/10 pt-8">
-          <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-            Selected Press
+        <div className="grid grid-cols-4 gap-8 border-t border-black/10 pt-8 max-md:grid-cols-1">
+          <p className="text-p text-[1em] font-semibold tracking-[-0.03em] ">
+            <div className=" flex items-center gap-2">
+              <span className="relative w-2 h-2 bg-p rounded-full" /> Selected
+              Press
+            </div>
           </p>
           <div className="col-span-3">
             <div className="grid grid-cols-3 mb-2">
               <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                Year
+                <div className=" flex items-center gap-2">
+                  <span className="relative w-1.5 h-1.5 bg-p " />
+                  Year
+                </div>
               </p>
               <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                Subject
+                <div className=" flex items-center gap-2">
+                  <span className="relative w-1.5 h-1.5 bg-p " />
+                  Subject
+                </div>
               </p>
-              <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                Publication
+              <p className="text-p text-[1em] font-semibold tracking-[-0.03em] ">
+                <div className=" flex items-center gap-2">
+                  <span className="relative w-1.5 h-1.5 bg-p " />
+                  Publication
+                </div>
               </p>
             </div>
-            <ul className="divide-y divide-black/10">
+            <ul className="divide-y divide-p/10">
               {press.map((item, i) => (
-                <li
-                  key={i}
-                  className="grid grid-cols-3 py-2 text-[0.95em] tracking-[-0.02em]"
-                >
+                <li key={i} className="grid grid-cols-3 py-2 ">
                   <p className="text-p text-[1em] font-medium tracking-[-0.03em]">
                     {item.year}
                   </p>

@@ -29,7 +29,7 @@ const horizontalAnimation = {
 const Transition = ({ Page, bg, ...props }) => {
   return (
     <>
-      <div className="fixed top-0 left-0 w-screen h-[100vh] flex z-[999] pointer-events-none select-none overflow-hidden">
+      <div className="fixed top-0 left-0 w-screen h-dvh flex z-9999 pointer-events-none select-none overflow-hidden">
         <motion.div
           {...horizontalAnimation}
           className={`absolute size-full  backdrop-blur-[58px] bg-[${bg}]/90 z-20`}
