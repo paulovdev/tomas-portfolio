@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import useSWR from "swr";
 import client from "../../../client";
 
 const clipAnim = {
@@ -14,52 +15,88 @@ const clipAnim = {
   },
 };
 
+/* -------------------------------------------------------------------------- */
+/*                                SWR FETCHER                                 */
+/* -------------------------------------------------------------------------- */
+const fetcher = async (query) => {
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  const data = await client.fetch(query, {}, { signal });
+
+  return data;
+};
+
 const Home = () => {
-  const [images, setImages] = useState([]);
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [removeContent, setRemoveContent] = useState(false);
+  const intervalRef = useRef(null);
 
-  useEffect(() => {
-    client
-      .fetch(
-        `*[_type == "home"][0]{
-          images[]{
-            alt,
-            "url": asset->url
-          }
-        }`
-      )
-      .then((data) => {
-        setImages(data?.images || []);
-        setLoading(false);
-      });
-  }, []);
+  /* -------------------------------------------------------------------------- */
+  /*                                SWR REQUEST                                 */
+  /* -------------------------------------------------------------------------- */
+  const { data, error, isLoading } = useSWR(
+    `*[_type == "home"][0]{
+      images[]{
+        alt,
+        "url": asset->url
+      }
+    }`,
+    fetcher,
+    {
+      dedupingInterval: 8000, // evita requisições duplicadas
+      revalidateOnFocus: true,
+    }
+  );
 
+  const images = data?.images || [];
+
+  /* -------------------------------------------------------------------------- */
+  /*                             SLIDESHOW OTIMIZADO                            */
+  /* -------------------------------------------------------------------------- */
   useEffect(() => {
-    if (images.length === 0) return;
-    const interval = setInterval(() => {
+    if (!images.length) return;
+
+    intervalRef.current = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
     }, 3500);
-    return () => clearInterval(interval);
+
+    return () => clearInterval(intervalRef.current);
   }, [images]);
 
+  /* -------------------------------------------------------------------------- */
+  /*                         REMOVER TEXTO DE INTRO                             */
+  /* -------------------------------------------------------------------------- */
   useEffect(() => {
-    setTimeout(() => setRemoveContent(true), 2000);
+    const timeout = setTimeout(() => setRemoveContent(true), 2000);
+    return () => clearTimeout(timeout);
   }, []);
 
-  if (loading || images.length === 0) {
-    return <section className="h-dvh bg-s"></section>;
+  /* -------------------------------------------------------------------------- */
+  /*                               LOADING & ERROR                               */
+  /* -------------------------------------------------------------------------- */
+  if (isLoading || !images.length) {
+    return <section className="h-dvh bg-s" />;
   }
 
+  if (error) {
+    console.error("Erro ao buscar imagens da home:", error);
+    return <section className="h-dvh bg-s" />;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   RENDER                                   */
+  /* -------------------------------------------------------------------------- */
   return (
     <section className="relative h-dvh bg-p overflow-hidden">
+      {/* IMAGEM BASE */}
       <img
         src={images[0].url}
         alt={images[0].alt || ""}
         className="absolute inset-0 w-full h-full object-cover"
       />
 
+      {/* TRANSIÇÃO ENTRE IMAGENS */}
       <AnimatePresence mode="sync">
         {index > 0 && (
           <motion.div
@@ -79,6 +116,7 @@ const Home = () => {
         )}
       </AnimatePresence>
 
+      {/* TEXTO DO MIDDLE */}
       <div className="relative z-10 flex items-center justify-center h-screen mix-blend-exclusion">
         <AnimatePresence mode="wait">
           {!removeContent && (

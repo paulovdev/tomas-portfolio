@@ -20,6 +20,9 @@ const Nav = () => {
   const isHome = pathname === "/";
   const isWorkDetail = /^\/works\/[^/]+$/.test(pathname);
 
+  //
+  // CLOCK
+  //
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -31,7 +34,6 @@ const Nav = () => {
           timeZone: "Australia/Sydney",
         })
         .replace(" ", "");
-
       setTime(formatted);
     };
 
@@ -40,9 +42,14 @@ const Nav = () => {
     return () => clearInterval(interval);
   }, []);
 
+  //
+  // CLEAR PROJECT WHEN LEAVING WORK DETAIL
+  //
   useEffect(() => {
-    if (!isWorkDetail && project) setProject(null);
-  }, [pathname, project]);
+    if (!isWorkDetail) {
+      setProject(null);
+    }
+  }, [isWorkDetail]);
 
   return (
     <>
@@ -57,18 +64,16 @@ const Nav = () => {
           }
         `}
       >
+        {/* LEFT LINKS */}
         <div className="flex items-center gap-1 w-full">
           <div className="flex gap-1">
             {links.map((link, i) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`
-                  text-[1em] font-medium tracking-[-0.03em] max-md:text-[1.1em]
+                className={`text-[1em] font-medium tracking-[-0.03em] max-md:text-[1.1em]
                   ${
-                    isHome
-                      ? "opacity-100"
-                      : isWorkDetail
+                    isHome || isWorkDetail
                       ? "opacity-100"
                       : pathname === link.href
                       ? "opacity-100"
@@ -83,6 +88,7 @@ const Nav = () => {
           </div>
         </div>
 
+        {/* CENTER — PROJECT TITLE + INFORMATION */}
         <div className="mr-[60px] w-full flex justify-end">
           {isWorkDetail && project && (
             <div className="flex items-center gap-2">
@@ -102,10 +108,11 @@ const Nav = () => {
           )}
         </div>
 
+        {/* RIGHT — CLOCK */}
         <div
           className={`w-full flex justify-end ${
             isWorkDetail && "max-md:hidden"
-          } `}
+          }`}
         >
           <span className="text-[1em] font-semibold tracking-[-0.03em] truncate max-md:text-[1.1em] uppercase ">
             {time}
@@ -113,6 +120,7 @@ const Nav = () => {
         </div>
       </nav>
 
+      {/* PROJECT MODAL */}
       <AnimatePresence mode="wait">
         {projectModal && (
           <ProjectDescription

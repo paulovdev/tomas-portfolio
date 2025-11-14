@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useSWR from "swr";
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { motion } from "framer-motion";
+
 const opacityAnim = {
   initial: { opacity: 0 },
   animate: {
@@ -14,41 +15,39 @@ const opacityAnim = {
     transition: { duration: 0.75, ease: [0.33, 1, 0.68, 1] },
   },
 };
+
+const fetcher = (slug) =>
+  client.fetch(
+    `*[_type == "works" && slug.current == $slug][0]{
+      title,
+      "slug": slug.current,
+      description,
+      year,
+      website,
+      images[] {
+        alt,
+        "url": asset->url
+      }
+    }`,
+    { slug }
+  );
+
 const WorkView = () => {
   const { workId } = useParams();
-  const [project, setProjectData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const setProject = useProjectStore((state) => state.setProject);
 
-  useEffect(() => {
-    if (!workId) return;
+  const { data: project, isLoading } = useSWR(
+    workId ? ["work", workId] : null,
+    () => fetcher(workId),
+    {
+      onSuccess: (data) => setProject(data), // mantém sincronizado com sua store
+      revalidateOnFocus: false, // opcional: evita re-fetch quando volta para a aba
+    }
+  );
 
-    client
-      .fetch(
-        `*[_type == "works" && slug.current == $slug][0]{
-          title,
-          "slug": slug.current,
-          description,
-          year,
-          website,
-          images[] {
-            alt,
-            "url": asset->url
-          }
-        }`,
-        { slug: workId }
-      )
-      .then((data) => {
-        setProjectData(data);
-        setProject(data);
-        setLoading(false);
-      })
-      .catch(console.error);
-  }, [workId, setProject]);
-
-  if (loading || !project) {
+  if (isLoading || !project) {
     return (
-      <section className="relative min-h-screen flex items-center justify-center bg-s"></section>
+      <section className="relative min-h-screen flex items-center justify-center bg-s" />
     );
   }
 
