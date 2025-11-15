@@ -60,7 +60,7 @@ const Works = () => {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="w-full h-[500px] bg-[#F0EEE6] animate-pulse mb-10 max-md:mb-1"
+                className="w-full h-[500px] bg-[#F0EEE6] animate-pulse mb-10 max-md:mb-1 max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
               />
             ))}
           </div>
@@ -84,12 +84,12 @@ const Works = () => {
                 <div
                   key={work._id}
                   className="relative mb-10 group overflow-hidden cursor-pointer"
-                  onClick={() => handleOpen(work.slug)} // 🔥 sempre string
+                  onClick={() => handleOpen(work.slug)}
                 >
                   {isVideo ? (
                     <video
                       src={asset.url}
-                      className="w-full h-[500px] object-cover"
+                      className="w-full h-[500px] object-cover max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
                       muted
                       loop
                       autoPlay
@@ -99,10 +99,10 @@ const Works = () => {
                     <img
                       src={imageUrl}
                       alt={first.alt || work.title}
-                      className="w-full h-[500px] object-cover"
+                      className="w-full h-[500px] object-cover max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
                     />
                   ) : (
-                    <div className="w-full h-[500px] bg-[#E5E3DC]" />
+                    <div className="w-full h-[500px] bg-[#E5E3DC] max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]" />
                   )}
 
                   <h2 className="mt-2 text-p font-semibold">{work.title}</h2>

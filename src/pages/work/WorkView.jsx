@@ -215,7 +215,7 @@ const WorkView = () => {
                       {isVideo ? (
                         <video
                           src={asset.url}
-                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all"
+                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all max-ds:h-[350px] max-lg:h-[250px]  max-md:h-[175px]"
                           muted
                           loop
                           autoPlay
@@ -225,7 +225,7 @@ const WorkView = () => {
                         <img
                           src={thumb}
                           alt={proj.media?.[0]?.alt || proj.title}
-                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all"
+                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all max-ds:h-[350px] max-lg:h-[250px]  max-md:h-[175px]"
                         />
                       )}
 
