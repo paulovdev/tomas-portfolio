@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* ------------------- Fonte ------------------- */
 @font-face {
   font-family: "DM Sans";
   font-style: normal;
@@ -14,9 +13,7 @@
     U+2215, U+FEFF, U+FFFD;
 }
 
-/* ------------------- Tema ------------------- */
-:root {
-  /* cores */
+@theme {
   --color-p: #000000;
   --color-s: #ffffff;
   --color-t: #f2f2f2;
@@ -24,42 +21,28 @@
   --color-bg: #060606;
   --color-bg-2: #dadada;
 
-  /* breakpoints */
   --breakpoint-full-ds: 1900px;
   --breakpoint-ds: 1262px;
   --breakpoint-lg: 992px;
   --breakpoint-md: 768px;
   --breakpoint-sm: 400px;
-
-  /* safe-area iOS */
   --safe-top: env(safe-area-inset-top);
   --safe-bottom: env(safe-area-inset-bottom);
 }
 
-/* ------------------- Reset ------------------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 html,
 body {
-  font-family: "DM Sans", sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  min-height: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 
-  /* safe area iOS */
+  overflow-x: hidden;
+  font-family: "DM Sans", sans-serif;
+  scroll-behavior: smooth;
   padding-top: var(--safe-top);
   padding-bottom: var(--safe-bottom);
 }
 
-/* ------------------- Scrollbar ------------------- */
 ::-webkit-scrollbar {
   display: none;
 }
