@@ -2,53 +2,58 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import client from "../../../client";
 import HomeNav from "../../components/navs/HomeNav";
-import { urlFor } from "../../lib/sanityImage";
-
-const clipAnim = {
-  initial: { clipPath: "inset(0% 100% 0% 0%)" },
-  animate: {
-    clipPath: "inset(0% 0% 0% 0%)",
-    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
-  },
-  exit: {
-    clipPath: "inset(0% 0% 0% 100%)",
-    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
-  },
-};
 
 const Home = () => {
-  const [images, setImages] = useState([]);
+  const [media, setMedia] = useState([]);
   const [index, setIndex] = useState(0);
   const [loadingDone, setLoadingDone] = useState(false);
 
-  useEffect(() => {
-    const fetchHome = async () => {
-      const data = await client.fetch(
-        `*[_type == "home"][0]{ images[]{ alt, asset } }`
-      );
-      if (data?.images?.length) {
-        setImages(data.images);
-
-        data.images.forEach((img) => {
-          const preload = new Image();
-          preload.src = urlFor(img.asset).width(2000).quality(80).url();
-        });
+  const fetchHome = async () => {
+    const data = await client.fetch(`
+      *[_type == "home"][0]{ 
+        media[]{
+          alt,
+          asset->{
+            _id,
+            url,
+            mimeType
+          }
+        } 
       }
-    };
+    `);
+
+    if (data?.media?.length) {
+      setMedia(data.media);
+
+      // preload somente para imagens
+      data.media.forEach((item) => {
+        if (item.asset.mimeType?.startsWith("image/")) {
+          const preload = new Image();
+          preload.src = item.asset.url;
+        }
+      });
+
+      setTimeout(() => setLoadingDone(true), 1000);
+    }
+  };
+
+  useEffect(() => {
     fetchHome();
   }, []);
 
   useEffect(() => {
-    if (!images.length) return;
+    if (!media.length) return;
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
+      setIndex((prev) => (prev + 1) % media.length);
     }, 3500);
     return () => clearInterval(interval);
-  }, [images]);
+  }, [media]);
 
-  if (!images.length) return null;
+  // CORRIGIDO
+  if (!media.length) return null;
 
-  const currentImage = images[index];
+  const current = media[index];
+  const isVideo = current.asset.mimeType?.startsWith("video/");
 
   return (
     <>
@@ -56,15 +61,30 @@ const Home = () => {
 
       <div className="relative h-dvh w-full overflow-hidden">
         <AnimatePresence mode="sync">
-          <motion.img
-            key={currentImage.asset._ref}
-            src={urlFor(currentImage.asset).width(2000).quality(80).url()}
-            alt={currentImage.alt || ""}
-            className="absolute inset-0 w-full h-full object-cover"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.7 } }}
-            exit={{ opacity: 0, transition: { duration: 0.7 } }}
-          />
+          {isVideo ? (
+            <motion.video
+              key={current.asset._id}
+              src={current.asset.url}
+              className="absolute inset-0 w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.7 } }}
+              exit={{ opacity: 0, transition: { duration: 0.7 } }}
+            />
+          ) : (
+            <motion.img
+              key={current.asset._id}
+              src={current.asset.url}
+              alt={current.alt || ""}
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.7 } }}
+              exit={{ opacity: 0, transition: { duration: 0.7 } }}
+            />
+          )}
         </AnimatePresence>
 
         {!loadingDone && (
