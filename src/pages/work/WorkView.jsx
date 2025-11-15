@@ -166,7 +166,7 @@ const WorkView = () => {
 
       {loading || !project ? (
         <section className="relative pt-30 p-4 min-h-dvh bg-s">
-          <div className="flex flex-col gap-6">
+          <div className="mb-6 flex flex-col gap-6">
             <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
 
             <div className="grid grid-cols-2 gap-4">
@@ -174,7 +174,7 @@ const WorkView = () => {
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
             </div>
           </div>
-          <div className="flex flex-col gap-6">
+          <div className="mb-6 flex flex-col gap-6">
             <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
 
             <div className="grid grid-cols-2 gap-4">
@@ -182,7 +182,7 @@ const WorkView = () => {
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
             </div>
           </div>
-          <div className="flex flex-col gap-6">
+          <div className="mb-6 flex flex-col gap-6">
             <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
 
             <div className="grid grid-cols-2 gap-4">
