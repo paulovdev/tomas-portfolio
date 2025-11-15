@@ -69,7 +69,7 @@ const Home = () => {
 
         {!loadingDone && (
           <motion.div
-            className="absolute inset-0 flex flex-col justify-center items-center bg-[#F0EEE6] z-20"
+            className="absolute inset-0 flex flex-col justify-center items-center bg-[#F0EEE6] z-200"
             initial={{ y: 0 }}
             animate={{ y: "-100%" }}
             transition={{ delay: 1.2, duration: 0.8, ease: "easeInOut" }}
