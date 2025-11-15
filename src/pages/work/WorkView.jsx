@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { urlFor } from "../../lib/sanityImage";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
-import Lenis from "lenis";
 
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
@@ -46,7 +45,6 @@ const ProjectMedia = ({ media, title }) => {
 
         if (pos === 1) {
           const next = media[index + 1];
-
           return (
             <div key={"group-" + index} className="grid grid-cols-2 gap-4">
               {isVideo ? (
@@ -66,7 +64,6 @@ const ProjectMedia = ({ media, title }) => {
                   className="w-full h-[75vh] object-cover"
                 />
               )}
-
               {next?.asset &&
                 (next.asset.mimeType.startsWith("video/") ? (
                   <video
@@ -109,7 +106,6 @@ const WorkView = () => {
     const load = async () => {
       setLoading(true);
 
-      // 1) SE O PROJETO JÁ ESTÁ NO CACHE → usa
       if (projects[workId]) {
         const cached = projects[workId];
         setRelatedProjects(cached.related || []);
@@ -117,7 +113,6 @@ const WorkView = () => {
         return;
       }
 
-      // 2) SENÃO → busca tudo
       const project = await client.fetch(
         `*[_type == "works" && slug.current == $slug][0]{
           title,
@@ -125,7 +120,7 @@ const WorkView = () => {
           description,
           year,
           website,
-          media[]{
+          media[] {
             alt,
             asset->{
               _id,
@@ -141,7 +136,7 @@ const WorkView = () => {
         `*[_type == "works" && slug.current != $slug] | order(year desc)[0...3]{
           title,
           "slug": slug.current,
-          media[]{
+          media[] {
             alt,
             asset->{
               _id,
@@ -153,9 +148,7 @@ const WorkView = () => {
         { slug: workId }
       );
 
-      // 3) SALVA no ZUSTAND
       setProject(workId, { ...project, related });
-
       setRelatedProjects(related);
       setLoading(false);
     };
@@ -165,7 +158,6 @@ const WorkView = () => {
   }, [workId]);
 
   const project = projects[workId];
-
   const openProject = (slug) => navigate(`/works/${slug}`);
 
   return (
@@ -173,8 +165,18 @@ const WorkView = () => {
       <ProjectNav />
 
       {loading || !project ? (
-        <section className="relative h-dvh flex items-center justify-center bg-s">
-          <p className="text-s/50">Loading...</p>
+        <section className="relative pt-30 p-4 min-h-dvh bg-s">
+          {/* Skeleton Loader */}
+          <div className="flex flex-col gap-6">
+            {/* Primeiro item grande */}
+            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse" />
+
+            {/* Grid de 2 colunas */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse" />
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse" />
+            </div>
+          </div>
         </section>
       ) : (
         <>
@@ -182,13 +184,17 @@ const WorkView = () => {
             {project.media?.length > 0 ? (
               <ProjectMedia media={project.media} title={project.title} />
             ) : (
-              <p className="text-center text-s/50">No media available</p>
+              <p className="text-center text-p text-[1em] font-semibold tracking-[-0.03em]">
+                No media available
+              </p>
             )}
           </section>
 
           {relatedProjects.length > 0 && (
             <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col">
-              <h2 className="text-p font-semibold">Related Works</h2>
+              <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
+                Related Works
+              </h2>
 
               <div className="grid grid-cols-3 gap-4 w-full">
                 {relatedProjects.map((proj) => {
