@@ -68,8 +68,8 @@ const Home = () => {
               loop
               playsInline
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { duration: 0.7 } }}
-              exit={{ opacity: 0, transition: { duration: 0.7 } }}
+              animate={{ opacity: 1, transition: { duration: 0.5 } }}
+              exit={{ opacity: 0, transition: { duration: 0.5 } }}
             />
           ) : (
             <motion.img
@@ -78,8 +78,8 @@ const Home = () => {
               alt={current.alt || ""}
               className="absolute inset-0 w-full h-full object-cover"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { duration: 0.7 } }}
-              exit={{ opacity: 0, transition: { duration: 0.7 } }}
+              animate={{ opacity: 1, transition: { duration: 0.5 } }}
+              exit={{ opacity: 0, transition: { duration: 0.5 } }}
             />
           )}
         </AnimatePresence>

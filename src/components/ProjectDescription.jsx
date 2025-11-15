@@ -5,11 +5,11 @@ const modalAnim = {
   initial: { width: "0%" },
   animate: {
     width: "100%",
-    transition: { duration: 0.75, ease: [0.33, 1, 0.68, 1] },
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
   },
   exit: {
     width: "0%",
-    transition: { duration: 0.75, ease: [0.33, 1, 0.68, 1] },
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
   },
 };
 
@@ -17,11 +17,11 @@ const opacityAnim = {
   initial: { opacity: 0 },
   animate: {
     opacity: 1,
-    transition: { duration: 0.75, ease: [0.33, 1, 0.68, 1] },
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.75, ease: [0.33, 1, 0.68, 1] },
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
   },
 };
 
