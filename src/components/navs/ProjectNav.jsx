@@ -121,7 +121,7 @@ const ProjectNav = () => {
 
         <div className="w-full flex justify-end max-md:hidden">
           <span className="text-[1em] text-s font-semibold tracking-[-0.03em] uppercase flex items-center gap-1">
-            <Clock /> AEDT
+            <Clock /> WET
           </span>
         </div>
       </nav>

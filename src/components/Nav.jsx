@@ -115,7 +115,7 @@ const Nav = () => {
         {/* COLUNA 4 — Time (sempre aparece, inclusive no Work Detail) */}
         <div className="flex justify-end">
           <span className="text-[1em] font-semibold tracking-[-0.03em] uppercase">
-            {time} AEDT
+            {time} WET
           </span>
         </div>
       </nav>
