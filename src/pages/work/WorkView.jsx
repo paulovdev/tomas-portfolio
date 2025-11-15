@@ -197,7 +197,7 @@ const WorkView = () => {
             {project.media?.length > 0 ? (
               <ProjectMedia media={project.media} title={project.title} />
             ) : (
-              <p className="text-center text-p text-[1em] font-semibold tracking-[-0.03em]">
+              <p className="text-center text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]">
                 No media available
               </p>
             )}
@@ -205,7 +205,7 @@ const WorkView = () => {
 
           {relatedProjects.length > 0 && (
             <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col">
-              <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
+              <h2 className="text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]">
                 Related Works
               </h2>
 

@@ -43,21 +43,21 @@ const About = () => {
         </h2>
 
         <div className="grid grid-cols-4 mb-25 pt-8 max-md:grid-cols-1">
-          <p className="mb-6 text-p text-[1em]  font-semibold tracking-[-0.03em]">
+          <p className="mb-6 text-p  text-[.9em] max-md:text-[1em]  font-bold tracking-[-0.03em]">
             Services
           </p>
           {/* MOBILE */}
           <div className="max-md:flex max-md:flex-col hidden">
             {Object.entries(services).map(([category, items]) => (
               <div key={category}>
-                <p className="mb-6 border-b border-black/10 text-p text-[1em]  font-semibold tracking-[-0.03em]">
+                <p className="mb-6 border-b border-black/10 text-p  text-[.9em] max-md:text-[1em]  font-bold tracking-[-0.03em]">
                   {category}
                 </p>
                 <ul className="mb-6 grid grid-cols-3">
                   {items.map((item, i) => (
                     <li
                       key={i}
-                      className="mb-2 text-p text-[1em]  font-medium tracking-[-0.03em]"
+                      className="mb-2 text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]"
                     >
                       {item}
                     </li>
@@ -69,14 +69,14 @@ const About = () => {
           {/* DESKTOP */}
           {Object.entries(services).map(([category, items]) => (
             <div key={category} className="max-md:hidden block">
-              <p className="mb-6 border-b border-black/10 text-p text-[1em]  font-semibold tracking-[-0.03em]">
+              <p className="mb-6 border-b border-black/10 text-p  text-[.9em] max-md:text-[1em]  font-bold tracking-[-0.03em]">
                 {category}
               </p>
               <ul className="mr-6 ">
                 {items.map((item, i) => (
                   <li
                     key={i}
-                    className="text-p text-[1em]  font-medium tracking-[-0.03em]"
+                    className="text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]"
                   >
                     {item}
                   </li>
@@ -87,7 +87,7 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8 max-md:grid-cols-1">
-          <p className="text-p text-[1em]  font-semibold tracking-[-0.03em]">
+          <p className="text-p  text-[.9em] max-md:text-[1em]  font-bold tracking-[-0.03em]">
             About
           </p>
           <p className="col-span-3 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.1] max-md:text-[1.5em]">

@@ -26,14 +26,14 @@ const Contact = () => {
           </h2>
         </div>
         <div className="px-4 flex-2 w-full grid grid-cols-4 gap-8 border-t border-black/10 pt-8">
-          <p className="text-p text-[1em]  font-semibold tracking-[-0.03em]">
+          <p className="text-p  text-[.9em] max-md:text-[1em]  font-bold tracking-[-0.03em]">
             Contact
           </p>
           <div className="col-span-3 space-y-0.5">
             {contactInfo.map((line, i) => (
               <p
                 key={i}
-                className="text-p text-[1em]  font-semibold tracking-[-0.03em]"
+                className="text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]"
               >
                 {line}
               </p>
@@ -42,8 +42,8 @@ const Contact = () => {
         </div>
 
         <div className="w-full flex-1 flex items-end">
-          <p className="relative bottom-4 w-full px-4 text-p text-[1em]  font-semibold tracking-[-0.05em] max-md:absolute max-md:bottom-4">
-            © T—ML 2025
+          <p className="relative bottom-4 w-full px-4 text-p  text-[.9em] max-md:text-[1em]  font-bold tracking-[-0.05em] max-md:absolute max-md:bottom-4">
+            ©T—ML 2025
           </p>
           <AnimatePresence>
             {showNewsletter && (
