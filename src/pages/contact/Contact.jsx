@@ -1,17 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import ContactModal from "../../components/ContactModal";
 import { AnimatePresence } from "framer-motion";
-import Lenis from "lenis";
+
 import Nav from "../../components/navs/Nav";
 const Contact = () => {
   const [showNewsletter, setShowNewsletter] = useState(true);
-  const lenisRef = useRef(null);
-
-  useEffect(() => {
-    const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
-    lenisRef.current = lenis;
-    return () => lenis.destroy();
-  }, []);
 
   const contactInfo = [
     "Las Palmas de Gran Canaria, Spain",

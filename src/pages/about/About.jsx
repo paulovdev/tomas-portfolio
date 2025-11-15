@@ -1,6 +1,5 @@
-import { useRef, useEffect } from "react";
 import Footer from "../../components/Footer";
-import Lenis from "lenis";
+
 import Nav from "../../components/navs/Nav";
 const services = {
   Branding: [
@@ -31,12 +30,6 @@ const services = {
 };
 
 const About = () => {
-  const lenisRef = useRef(null);
-  useEffect(() => {
-    const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
-    lenisRef.current = lenis;
-    return () => lenis.destroy();
-  }, []);
   return (
     <>
       <Nav />

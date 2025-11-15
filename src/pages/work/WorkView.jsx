@@ -7,7 +7,6 @@ import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
 import Lenis from "lenis";
 
-// COMPONENTE DE IMAGENS + VÍDEOS
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
     urlFor(asset).width(1600).quality(80).auto("format").url();
@@ -98,22 +97,13 @@ const ProjectMedia = ({ media, title }) => {
 };
 
 const WorkView = () => {
-  const lenisRef = useRef(null);
   const { workId } = useParams();
   const navigate = useNavigate();
 
-  // teu store
   const { projects, setProject } = useProjectStore();
 
   const [loading, setLoading] = useState(true);
   const [relatedProjects, setRelatedProjects] = useState([]);
-
-  // Smooth scroll
-  useEffect(() => {
-    const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
-    lenisRef.current = lenis;
-    return () => lenis.destroy();
-  }, []);
 
   useEffect(() => {
     const load = async () => {

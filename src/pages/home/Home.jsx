@@ -10,11 +10,8 @@ const Home = () => {
 
   const { media, setMedia } = useHomeStore();
 
-  // -------------------------------
-  // FETCH — apenas se não existir cache
-  // -------------------------------
   useEffect(() => {
-    if (media) return; // já temos cache → não busca
+    if (media) return;
 
     const fetchHome = async () => {
       const data = await client.fetch(`

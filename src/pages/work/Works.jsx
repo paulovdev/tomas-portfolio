@@ -4,26 +4,19 @@ import client from "../../../client";
 import { urlFor } from "../../lib/sanityImage";
 import Nav from "../../components/navs/Nav";
 import Footer from "../../components/Footer";
-import Lenis from "lenis";
+
 import { useWorksStore } from "../../store/useWorksStore";
 
 const Works = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const lenisRef = useRef(null);
-
-  useEffect(() => {
-    const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
-    lenisRef.current = lenis;
-    return () => lenis.destroy();
-  }, []);
 
   const { works, setWorks } = useWorksStore();
 
   useEffect(() => {
     if (works) {
       setLoading(false);
-      return; // já temos cache → não faz request
+      return;
     }
 
     const fetchWorks = async () => {
