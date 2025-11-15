@@ -16,7 +16,7 @@ const Contact = () => {
   return (
     <>
       <Nav />
-      <section className="relative w-full h-screen flex flex-col items-start justify-between pt-24 bg-s text-p">
+      <section className="relative w-full h-dvh flex flex-col items-start justify-between pt-24 bg-s text-p">
         <div className="px-4 mb-20 max-w-[1000px] flex-1">
           <h2 className="text-[1.75em] font-medium tracking-[-0.03em] leading-[1.1] max-md:text-[1.5em]">
             If you’d like to discuss a project or learn more about our process,

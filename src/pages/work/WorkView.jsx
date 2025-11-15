@@ -173,12 +173,12 @@ const WorkView = () => {
       <ProjectNav />
 
       {loading || !project ? (
-        <section className="relative h-screen flex items-center justify-center bg-s">
+        <section className="relative h-dvh flex items-center justify-center bg-s">
           <p className="text-s/50">Loading...</p>
         </section>
       ) : (
         <>
-          <section className="relative pt-30 p-4 min-h-screen bg-s">
+          <section className="relative pt-30 p-4 min-h-dvh bg-s">
             {project.media?.length > 0 ? (
               <ProjectMedia media={project.media} title={project.title} />
             ) : (

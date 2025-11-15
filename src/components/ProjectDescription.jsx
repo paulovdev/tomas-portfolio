@@ -60,7 +60,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
         <>
           {/* Modal */}
           <motion.div
-            className="fixed top-0 right-0 max-w-[50vw] h-screen overflow-y-auto bg-[#F0EEE6] max-lg:max-w-screen z-2000"
+            className="fixed top-0 right-0 max-w-[50vw] h-dvh overflow-y-auto bg-[#F0EEE6] max-lg:max-w-screen z-2000"
             variants={modalAnim}
             initial="initial"
             animate="animate"
@@ -121,7 +121,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
 
           {/* Backdrop */}
           <motion.div
-            className="fixed top-0 left-0 w-screen h-screen bg-bg/15 backdrop-blur-lg z-1999"
+            className="fixed top-0 left-0 w-screen h-dvh bg-bg/15 backdrop-blur-lg z-1999"
             variants={opacityAnim}
             initial="initial"
             animate="animate"
