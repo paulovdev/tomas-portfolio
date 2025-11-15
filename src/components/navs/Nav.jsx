@@ -25,7 +25,7 @@ const Nav = () => {
         <div className="flex content-start justify-start max-md:hidden">
           <Link
             to="/"
-            className={`text-[clamp(.75em,3vw,1em)] text-s! font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] text-s! font-medium tracking-[-0.03em] ${isActive(
               "/"
             )}`}
           >
@@ -37,7 +37,7 @@ const Nav = () => {
         <div className="flex justify-start gap-1 max-md:hidden">
           <Link
             to="/works"
-            className={`text-[clamp(.75em,3vw,1em)] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] ${isActive(
               "/works"
             )}`}
           >
@@ -46,7 +46,7 @@ const Nav = () => {
 
           <Link
             to="/about"
-            className={`text-[clamp(.75em,3vw,1em)] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] ${isActive(
               "/about"
             )}`}
           >
@@ -55,7 +55,7 @@ const Nav = () => {
 
           <Link
             to="/contact"
-            className={`text-[clamp(.75em,3vw,1em)] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] ${isActive(
               "/contact"
             )}`}
           >
@@ -67,7 +67,7 @@ const Nav = () => {
         <div className="max-md:flex justify-center  gap-1 hidden">
           <Link
             to="/"
-            className={`text-[clamp(.75em,3vw,1em)] text-s font-medium tracking-[-0.03em] truncate
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] text-s font-medium tracking-[-0.03em] truncate
         
       `}
           >
@@ -76,7 +76,7 @@ const Nav = () => {
 
           <Link
             to="/works"
-            className={`text-[clamp(.75em,3vw,1em)] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] ${isActive(
               "/works"
             )}`}
           >
@@ -85,7 +85,7 @@ const Nav = () => {
 
           <Link
             to="/about"
-            className={`text-[clamp(.75em,3vw,1em)] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] ${isActive(
               "/about"
             )}`}
           >
@@ -94,7 +94,7 @@ const Nav = () => {
 
           <Link
             to="/contact"
-            className={`text-[clamp(.75em,3vw,1em)] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] ${isActive(
               "/contact"
             )}`}
           >
@@ -104,7 +104,7 @@ const Nav = () => {
 
         {/* CLOCK */}
         <div className="w-full flex justify-end col-span-2 ">
-          <span className="text-[clamp(.75em,3vw,1em)] text-s font-semibold tracking-[-0.03em] uppercase flex items-center gap-1">
+          <span className="text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] text-s font-semibold tracking-[-0.03em] uppercase flex items-center gap-1">
             <Clock /> WET
           </span>
         </div>

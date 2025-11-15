@@ -126,7 +126,7 @@ const WorkView = () => {
 
           {relatedProjects.length > 0 && (
             <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col max-md:items-start">
-              <h2 className="text-p text-[clamp(.75em,3vw,1em)] font-semibold tracking-[-0.03em]">
+              <h2 className="text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-semibold tracking-[-0.03em]">
                 Related Works
               </h2>
               <div className="w-full grid grid-cols-3 gap-4">
