@@ -166,12 +166,25 @@ const WorkView = () => {
 
       {loading || !project ? (
         <section className="relative pt-30 p-4 min-h-dvh bg-s">
-          {/* Skeleton Loader */}
           <div className="flex flex-col gap-6">
-            {/* Primeiro item grande */}
             <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
 
-            {/* Grid de 2 colunas */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+            </div>
+          </div>
+          <div className="flex flex-col gap-6">
+            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+            </div>
+          </div>
+          <div className="flex flex-col gap-6">
+            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+
             <div className="grid grid-cols-2 gap-4">
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
