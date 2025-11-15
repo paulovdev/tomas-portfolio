@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import client from "../../../client";
 import { urlFor } from "../../lib/sanityImage";
@@ -12,6 +12,10 @@ const Works = () => {
   const [loading, setLoading] = useState(true);
 
   const { works, setWorks } = useWorksStore();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
 
   useEffect(() => {
     if (works) {

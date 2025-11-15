@@ -5,8 +5,14 @@ const Nav = () => {
   const { pathname } = useLocation();
 
   const isActive = (href) => {
-    if (pathname === "/works") {
-      return pathname === href ? "text-s/50" : "text-s";
+    if (
+      pathname === "/works" ||
+      pathname === "/about" ||
+      pathname === "/contact"
+    ) {
+      return pathname === href
+        ? "text-s! max-md:text-s/50!"
+        : "text-s/50! max-md:text-s!";
     }
     return pathname === href ? "text-s" : "text-s/50";
   };
@@ -64,7 +70,7 @@ const Nav = () => {
         </div>
 
         {/* MOBILE */}
-        <div className="max-md:flex justify-center  gap-1 hidden">
+        <div className="max-md:flex justify-center gap-1 hidden">
           <Link
             to="/"
             className={`text-[1em]  text-s font-medium tracking-[-0.03em] truncate

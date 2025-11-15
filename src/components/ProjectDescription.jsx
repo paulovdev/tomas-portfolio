@@ -30,14 +30,11 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
 
   useEffect(() => {
     if (projectModal) {
-      // Salva a posição atual do scroll
       scrollPosRef.current = window.scrollY;
 
-      // Bloqueia scroll no body sem mudar width
       document.body.style.overflow = "hidden";
 
       return () => {
-        // Restaura scroll ao fechar
         document.body.style.overflow = "";
         window.scrollTo(0, scrollPosRef.current);
       };
