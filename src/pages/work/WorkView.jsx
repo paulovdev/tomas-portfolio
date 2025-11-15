@@ -204,12 +204,12 @@ const WorkView = () => {
           </section>
 
           {relatedProjects.length > 0 && (
-            <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col">
-              <h2 className="text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]">
+            <section className="pt-10 pb-20 px-4 w-full grid grid-cols-3 gap-4 max-md:flex max-md:flex-col">
+              <h2 className="text-p text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]">
                 Related Works
               </h2>
 
-              <div className="grid grid-cols-3 gap-4 w-full">
+              <div className="grid grid-cols-3 gap-4 w-full col-span-2">
                 {relatedProjects.map((proj) => {
                   const asset = proj.media?.[0]?.asset;
                   if (!asset) return null;
@@ -228,7 +228,7 @@ const WorkView = () => {
                       {isVideo ? (
                         <video
                           src={asset.url}
-                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all max-ds:h-[550px] max-lg:h-[250px]  max-md:h-[175px]"
+                          className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px]  max-md:h-[175px]"
                           muted
                           loop
                           autoPlay
@@ -238,7 +238,7 @@ const WorkView = () => {
                         <img
                           src={thumb}
                           alt={proj.media?.[0]?.alt || proj.title}
-                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all max-ds:h-[550px] max-lg:h-[250px]  max-md:h-[175px]"
+                          className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px]  max-md:h-[175px]"
                         />
                       )}
 

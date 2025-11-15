@@ -93,7 +93,7 @@ const Works = () => {
                   {isVideo ? (
                     <video
                       src={asset.url}
-                      className="w-full h-[500px] object-cover max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
+                      className="w-full h-[500px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
                       muted
                       loop
                       autoPlay
@@ -103,7 +103,7 @@ const Works = () => {
                     <img
                       src={imageUrl}
                       alt={first.alt || work.title}
-                      className="w-full h-[500px] object-cover max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
+                      className="w-full h-[500px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
                     />
                   ) : (
                     <div className="w-full h-[500px] bg-[#E5E3DC] max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]" />
