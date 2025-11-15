@@ -30,6 +30,10 @@
   --safe-bottom: env(safe-area-inset-bottom);
 }
 
+* {
+  -webkit-transform: translateZ(0);
+}
+
 html,
 body {
   box-sizing: border-box;
