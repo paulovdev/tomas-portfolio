@@ -111,7 +111,7 @@ const Works = () => {
                 />
 
                 <div className="relative mt-2">
-                  <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
+                  <h2 className="text-p text-[clamp(.75em,3vw,1em)] font-semibold tracking-[-0.03em]">
                     {work.title}
                   </h2>
                 </div>
