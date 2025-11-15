@@ -3,6 +3,8 @@ import useSWR from "swr";
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { motion } from "framer-motion";
+import ProjectNav from "../../components/navs/ProjectNav";
+import Footer from "../../components/Footer";
 
 const opacityAnim = {
   initial: { opacity: 0 },
@@ -52,19 +54,61 @@ const WorkView = () => {
   }
 
   return (
-    <section className="relative pt-30 p-4 min-h-screen bg-s">
-      <div className="grid grid-cols-2 gap-4 max-lg:grid-cols-2">
-        {project.images?.map((img, i) => (
-          <motion.img
-            key={i}
-            src={img.url}
-            alt={img.alt || project.title}
-            className="w-full h-auto object-cover"
-            {...opacityAnim}
-          />
-        ))}
-      </div>
-    </section>
+    <>
+      <ProjectNav />
+      <section className="relative pt-30 p-4 min-h-screen bg-s">
+        <div className="flex flex-col gap-4">
+          {project.images?.map((img, index) => {
+            // posição dentro do ciclo de 3: 0(full), 1(col), 2(col)
+            const pos = index % 3;
+
+            // FULL WIDTH
+            if (pos === 0) {
+              return (
+                <motion.img
+                  key={index}
+                  src={img.url}
+                  alt={img.alt || project.title}
+                  className="w-full h-auto object-cover"
+                  {...opacityAnim}
+                />
+              );
+            }
+
+            // DUAS COLUNAS (pos 1 e 2)
+            if (pos === 1) {
+              // quando for pos 1, renderizamos um bloco com pos1 e pos2 juntos
+              return (
+                <div key={"group-" + index} className="grid grid-cols-2 gap-4">
+                  {/* imagem atual */}
+                  <motion.img
+                    src={img.url}
+                    alt={img.alt || project.title}
+                    className="w-full h-[75vh] object-cover max-md:h-[50vh]"
+                    {...opacityAnim}
+                  />
+
+                  {/* próxima imagem (se existir) */}
+                  {project.images[index + 1] && (
+                    <motion.img
+                      src={project.images[index + 1].url}
+                      alt={project.images[index + 1].alt || project.title}
+                      className="w-full h-[75vh] object-cover max-md:h-[50vh]"
+                      {...opacityAnim}
+                    />
+                  )}
+                </div>
+              );
+            }
+
+            // pos === 2 → já foi renderizado junto com o pos1
+            return null;
+          })}
+        </div>
+      </section>
+
+      <Footer />
+    </>
   );
 };
 

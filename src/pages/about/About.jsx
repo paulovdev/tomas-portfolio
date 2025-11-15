@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import Footer from "../../components/Footer";
 import Lenis from "lenis";
+import Nav from "../../components/navs/Nav";
 const services = {
   Creative: [
     "Brand Identity",
@@ -48,6 +49,7 @@ const About = () => {
   }, []);
   return (
     <>
+      <Nav />
       <section className="relative h-full px-4 py-24 bg-s text-p">
         <h2 className="max-w-[1000px] mb-32 text-[1.5em] font-medium tracking-[-0.03em] leading-[1.3]">
           A Melbourne-based branding and communication studio, BOTH operates at
@@ -59,19 +61,13 @@ const About = () => {
 
         <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8 max-md:grid-cols-1">
           <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-            <div className="flex items-center gap-2">
-              <span className="relative w-2 h-2 bg-p rounded-full" />
-              Services
-            </div>
+            Services
           </p>
           <div className="max-md:grid max-md:grid-cols-3 max-md:gap-4 hidden">
             {Object.entries(services).map(([category, items]) => (
               <div key={category}>
                 <p className="mb-2 text-p text-[1em] font-semibold tracking-[-0.03em]">
-                  <div className=" flex items-center gap-2">
-                    <span className="relative w-1.5 h-1.5 bg-p " />
-                    {category}
-                  </div>
+                  {category}
                 </p>
                 <ul className="space-y-0.5 text-[0.95em]">
                   {items.map((item, i) => (
@@ -90,10 +86,7 @@ const About = () => {
           {Object.entries(services).map(([category, items]) => (
             <div key={category} className="max-md:hidden block">
               <p className="mb-2 text-p text-[1em] font-semibold tracking-[-0.03em]">
-                <div className=" flex items-center gap-2">
-                  <span className="relative w-1.5 h-1.5 bg-p " />
-                  {category}
-                </div>
+                {category}
               </p>
               <ul className="space-y-0.5 text-[0.95em]">
                 {items.map((item, i) => (
@@ -111,9 +104,7 @@ const About = () => {
 
         <div className="grid grid-cols-4 gap-8 mb-32 border-t border-black/10 pt-8 max-md:grid-cols-1">
           <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-            <div className=" flex items-center gap-2">
-              <span className="relative w-2 h-2 rounded-full bg-p " /> Team
-            </div>
+            Team
           </p>
           <p className="col-span-3 text-[1.5em] font-medium tracking-[-0.03em] leading-[1.3]">
             Established in 2010 by Sigiriya Brown and Dan Smith, BOTH emerged
@@ -127,30 +118,18 @@ const About = () => {
 
         <div className="grid grid-cols-4 gap-8 border-t border-black/10 pt-8 max-md:grid-cols-1">
           <p className="text-p text-[1em] font-semibold tracking-[-0.03em] ">
-            <div className=" flex items-center gap-2">
-              <span className="relative w-2 h-2 bg-p rounded-full" /> Selected
-              Press
-            </div>
+            Selected Press
           </p>
           <div className="col-span-3">
             <div className="grid grid-cols-3 mb-2">
               <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                <div className=" flex items-center gap-2">
-                  <span className="relative w-1.5 h-1.5 bg-p " />
-                  Year
-                </div>
+                Year
               </p>
               <p className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                <div className=" flex items-center gap-2">
-                  <span className="relative w-1.5 h-1.5 bg-p " />
-                  Subject
-                </div>
+                Subject
               </p>
               <p className="text-p text-[1em] font-semibold tracking-[-0.03em] ">
-                <div className=" flex items-center gap-2">
-                  <span className="relative w-1.5 h-1.5 bg-p " />
-                  Publication
-                </div>
+                Publication
               </p>
             </div>
             <ul className="divide-y divide-p/10">

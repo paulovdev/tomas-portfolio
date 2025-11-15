@@ -6,6 +6,7 @@ import client from "../../../client";
 import Footer from "../../components/Footer";
 import { motion } from "framer-motion";
 import { HiOutlineSquaresPlus, HiOutlineSquares2X2 } from "react-icons/hi2";
+import Nav from "../../components/navs/Nav";
 
 const opacityAnim = {
   initial: { opacity: 0 },
@@ -60,14 +61,13 @@ const Works = () => {
     `*[_type == "works"]{
       _id,
       title,
-      year,
       slug,
       images[0]{ alt, "url": asset->url }
     }`,
     fetcher,
     {
       revalidateOnFocus: true,
-      dedupingInterval: 1000 * 10, // evita requisições repetidas
+      dedupingInterval: 1000 * 10,
     }
   );
 
@@ -75,14 +75,6 @@ const Works = () => {
   const handleOpen = useCallback((slug) => {
     navigate(`/works/${slug.current || slug}`);
   }, []);
-
-  const gridClass = useMemo(
-    () =>
-      view === "grid4"
-        ? "grid-cols-4 max-md:grid-cols-2 max-ds:grid-cols-2"
-        : "grid-cols-3 max-md:grid-cols-1 max-ds:grid-cols-3",
-    [view]
-  );
 
   // ------------------------------- Loading ----------------------------------
   if (isLoading) {
@@ -96,45 +88,18 @@ const Works = () => {
   if (error) {
     return (
       <section className="relative h-dvh bg-s p-5">
-        <p className="text-red-400">Erro ao carregar Works.</p>
+        <p className="text-red-400">Error on loading works.</p>
       </section>
     );
   }
 
-  // ------------------------------ Template ----------------------------------
   return (
     <>
+      <Nav />
       <section className="relative pt-30 pb-30 px-4 h-full bg-s">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <p className="text-p flex items-center gap-2 font-semibold tracking-[-0.03em]">
-            <span className="w-2 h-2 rounded-full bg-p" />
-            Works ({works?.length})
-          </p>
-
-          <div className="flex items-center gap-2 px-3 py-2">
-            <button
-              onClick={() => setView("grid3")}
-              className={`p-2 transition ${
-                view === "grid3" ? "bg-p text-s" : "text-s bg-p/40"
-              }`}
-            >
-              <HiOutlineSquares2X2 size={18} />
-            </button>
-
-            <button
-              onClick={() => setView("grid4")}
-              className={`p-2 transition ${
-                view === "grid4" ? "bg-p text-s" : "text-s bg-p/40"
-              }`}
-            >
-              <HiOutlineSquaresPlus size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Grid */}
-        <div className={`grid ${gridClass} gap-4 z-10`}>
+        <div
+          className={`grid grid-cols-4 gap-4 z-10 max-md:grid-cols-1 max-lg:grid-cols-2`}
+        >
           {works?.map((work, i) => (
             <motion.div
               key={work._id}
@@ -153,9 +118,6 @@ const Works = () => {
               <div className="relative mt-2">
                 <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
                   {work.title}
-                </h2>
-                <h2 className="text-p text-[1em] font-semibold tracking-[-0.03em]">
-                  {work.year}
                 </h2>
               </div>
             </motion.div>

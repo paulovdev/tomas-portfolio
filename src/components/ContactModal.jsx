@@ -28,51 +28,54 @@ const opacityAnim = {
 const ContactModal = ({ setShowNewsletter }) => {
   return (
     <motion.div
-      className="relative -top-2 max-w-[450px] h-[260px] bg-p z-10 max-md:max-w-full"
+      className="absolute w-full right-0 bottom-0 flex items-end justify-end"
       variants={modalAnim}
       initial="initial"
       animate="animate"
       exit="exit"
     >
-      <motion.div className="p-4 h-full" {...opacityAnim}>
-        <div className="flex items-center justify-end mb-3">
+      <motion.div
+        className="p-4 max-w-[450px] w-full h-[260px] bg-[#F0EEE6] z-50 max-md:max-w-full"
+        {...opacityAnim}
+      >
+        <div className="w-full flex items-center justify-between mb-3">
+          <p className="text-p text-[1em] font-medium tracking-[-0.03em]">
+            Let's talk
+          </p>
           <button
             onClick={() => setShowNewsletter(false)}
-            className="text-s text-[1em] font-medium tracking-[-0.03em]"
+            className="text-p text-[1em] font-medium tracking-[-0.03em]"
           >
             Close
           </button>
         </div>
 
         <form className="flex flex-col items-start justify-start gap-2">
-          <label
-            htmlFor="name"
-            className="text-s/75 text-[1em]  font-medium tracking-[-0.03em]"
-          >
-            Name
-          </label>
           <input
             type="text"
             id="name"
-            className="pl-2 p-1 w-full border border-s/25 text-s text-[1em] font-medium tracking-[-0.03em] bg-transparent outline-none"
+            placeholder="name"
+            className="w-full border-b border-p text-p text-[1em] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
           />
-          <label
-            htmlFor="email"
-            className="text-s/75 text-[1em]  font-medium tracking-[-0.03em]"
-          >
-            E-mail
-          </label>
+
           <input
             type="email"
             id="email"
-            className="pl-2 p-1 w-full border border-s/25 text-s text-[1em] font-medium tracking-[-0.03em] bg-transparent outline-none"
+            placeholder="e-mail"
+            className=" w-full border-b border-p text-p text-[1em] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+          />
+
+          <textarea
+            name="message"
+            id="message"
+            placeholder="message"
+            className="w-full border-b border-p text-p text-[1em] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
           />
           <button
             type="submit"
-            className="mt-4 w-full p-1 bg-s text-p text-[1em] font-medium tracking-[-0.03em] text-center hover:bg-s/90 
-              transition-all duration-500"
+            className="w-full  text-p text-[1em] font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
           >
-            Subscribe
+            Send
           </button>
         </form>
       </motion.div>

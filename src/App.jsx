@@ -14,7 +14,6 @@ function App() {
 
   return (
     <>
-      <Nav />
       <AnimatePresence mode="wait">
         <Routes location={location} key={`${location.pathname}-${location}`}>
           <Route index element={<Transition Page={Home} bg="#fefefe" />} />

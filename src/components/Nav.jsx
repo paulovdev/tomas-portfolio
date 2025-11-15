@@ -4,13 +4,6 @@ import { useProjectStore } from "../store/useProjectStore";
 import ProjectDescription from "./ProjectDescription";
 import { AnimatePresence } from "framer-motion";
 
-const links = [
-  { href: "/", label: "BOTH" },
-  { href: "/works", label: "Work" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
-
 const Nav = () => {
   const { pathname } = useLocation();
   const [time, setTime] = useState("");
@@ -20,20 +13,18 @@ const Nav = () => {
   const isHome = pathname === "/";
   const isWorkDetail = /^\/works\/[^/]+$/.test(pathname);
 
-  //
-  // CLOCK
-  //
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
-      const formatted = now
-        .toLocaleTimeString("en-AU", {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-          timeZone: "Australia/Sydney",
-        })
-        .replace(" ", "");
+
+      const formatted = now.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "Atlantic/Canary",
+      });
+
       setTime(formatted);
     };
 
@@ -42,9 +33,6 @@ const Nav = () => {
     return () => clearInterval(interval);
   }, []);
 
-  //
-  // CLEAR PROJECT WHEN LEAVING WORK DETAIL
-  //
   useEffect(() => {
     if (!isWorkDetail) {
       setProject(null);
@@ -55,72 +43,83 @@ const Nav = () => {
     <>
       <nav
         className={`
-          fixed top-0 left-0 p-4 py-2 w-full flex items-center justify-between 
-          z-100 
-          ${
-            isHome
-              ? "text-white mix-blend-normal"
-              : "text-white mix-blend-difference"
-          }
-        `}
+    fixed top-0 left-0 p-4 py-2 w-full
+    grid grid-cols-4 items-center
+    z-100
+    ${
+      isHome ? "text-white mix-blend-normal" : "text-white mix-blend-difference"
+    }
+  `}
       >
-        {/* LEFT LINKS */}
-        <div className="flex items-center gap-1 w-full">
-          <div className="flex gap-1">
-            {links.map((link, i) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={`text-[1em] font-medium tracking-[-0.03em] max-md:text-[1.1em]
-                  ${
-                    isHome || isWorkDetail
-                      ? "opacity-100"
-                      : pathname === link.href
-                      ? "opacity-100"
-                      : "opacity-50"
-                  }
-                `}
-              >
-                {link.label}
-                {i !== links.length - 1 && ","}
-              </Link>
-            ))}
-          </div>
+        {/* COLUNA 1 — BOTH */}
+        <div className="flex justify-start">
+          <Link
+            to="/"
+            className={`text-[1em] font-medium tracking-[-0.03em]
+        ${pathname === "/" ? "opacity-100" : "opacity-50"}
+      `}
+          >
+            BOTH
+          </Link>
         </div>
 
-        {/* CENTER — PROJECT TITLE + INFORMATION */}
-        <div className="mr-[60px] w-full flex justify-end">
-          {isWorkDetail && project && (
+        {/* COLUNA 2 — Work, Studio, Contact */}
+        <div className="flex justify-center gap-2">
+          <Link
+            to="/works"
+            className={`text-[1em] font-medium tracking-[-0.03em]
+        ${pathname === "/works" ? "opacity-100" : "opacity-50"}
+      `}
+          >
+            Work,
+          </Link>
+
+          <Link
+            to="/about"
+            className={`text-[1em] font-medium tracking-[-0.03em]
+        ${pathname === "/about" ? "opacity-100" : "opacity-50"}
+      `}
+          >
+            Studio,
+          </Link>
+
+          <Link
+            to="/contact"
+            className={`text-[1em] font-medium tracking-[-0.03em]
+        ${pathname === "/contact" ? "opacity-100" : "opacity-50"}
+      `}
+          >
+            Contact
+          </Link>
+        </div>
+
+        {/* COLUNA 3 — Project Title + Information (aparece só no Work Detail) */}
+        <div className="flex justify-center">
+          {isWorkDetail && project ? (
             <div className="flex items-center gap-2">
-              <span className="text-[1em] font-semibold tracking-[-0.03em] max-md:text-[1.1em]">
+              <span className="text-[1em] font-semibold tracking-[-0.03em]">
                 {project.title}
               </span>
-              <span className="text-[1em] font-semibold max-md:text-[1.1em]">
-                —
-              </span>
+              <span className="text-[1em] font-semibold">—</span>
+
               <button
                 onClick={() => setProjectModal(true)}
-                className="text-[1em] font-semibold tracking-[-0.03em] max-md:text-[1.1em] cursor-pointer"
+                className="text-[1em] font-semibold tracking-[-0.03em] cursor-pointer"
               >
                 Information
               </button>
             </div>
-          )}
+          ) : null}
         </div>
 
-        {/* RIGHT — CLOCK */}
-        <div
-          className={`w-full flex justify-end ${
-            isWorkDetail && "max-md:hidden"
-          }`}
-        >
-          <span className="text-[1em] font-semibold tracking-[-0.03em] truncate max-md:text-[1.1em] uppercase ">
-            {time}
+        {/* COLUNA 4 — Time (sempre aparece, inclusive no Work Detail) */}
+        <div className="flex justify-end">
+          <span className="text-[1em] font-semibold tracking-[-0.03em] uppercase">
+            {time} AEDT
           </span>
         </div>
       </nav>
 
-      {/* PROJECT MODAL */}
       <AnimatePresence mode="wait">
         {projectModal && (
           <ProjectDescription
