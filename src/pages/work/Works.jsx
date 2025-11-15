@@ -11,21 +11,31 @@ const Works = () => {
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
   const lenisRef = useRef(null);
+
   useEffect(() => {
     const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
     lenisRef.current = lenis;
     return () => lenis.destroy();
   }, []);
+
   useEffect(() => {
     const fetchWorks = async () => {
-      const data = await client.fetch(
-        `*[_type == "works"]{
+      const data = await client.fetch(`
+        *[_type == "works"]{
           _id,
           title,
           slug,
-          "image": images[0]{ alt, asset }
-        }`
-      );
+          media[]{
+            alt,
+            asset->{
+              _id,
+              url,
+              mimeType
+            }
+          }
+        }
+      `);
+
       setWorks(data);
       setLoading(false);
     };
@@ -56,32 +66,46 @@ const Works = () => {
         ) : (
           <div className="grid grid-cols-4 gap-4 max-md:grid-cols-1 max-lg:grid-cols-3">
             {works.map((work) => {
-              const imageUrl = work.image?.asset
-                ? urlFor(work.image.asset)
-                    .width(1600)
-                    .quality(70)
-                    .auto("format")
-                    .url()
-                : "";
+              const first = work.media?.[0]; // 👈 PEGA O PRIMEIRO
+              const asset = first?.asset; // 👈 aqui sim existe asset
+
+              if (!asset) return null;
+
+              const isVideo = asset.mimeType?.startsWith("video/");
+              const isImage = asset.mimeType?.startsWith("image/");
+
+              const imageUrl =
+                isImage && asset
+                  ? urlFor(asset).width(1600).quality(70).auto("format").url()
+                  : null;
 
               return (
                 <div
                   key={work._id}
-                  className="relative mb-10 group overflow-hidden cursor-pointer max-md:mb-1"
+                  className="relative mb-10 group overflow-hidden cursor-pointer"
                   onClick={() => handleOpen(work.slug)}
                 >
-                  {imageUrl && (
+                  {isVideo ? (
+                    <video
+                      src={asset.url}
+                      className="w-full h-[500px] object-cover"
+                      muted
+                      loop
+                      autoPlay
+                      playsInline
+                    />
+                  ) : imageUrl ? (
                     <img
                       src={imageUrl}
-                      alt={work.image?.alt || work.title}
-                      className="w-full h-[500px] object-cover brightness-75 group-hover:brightness-100 transition-all duration-500 relative"
+                      alt={first.alt || work.title}
+                      className="w-full h-[500px] object-cover"
                     />
+                  ) : (
+                    // FALLBACK REAL
+                    <div className="w-full h-[500px] bg-[#E5E3DC]" />
                   )}
-                  <div className="relative mt-2">
-                    <h2 className="text-p text-[clamp(1em,5vw,1em)] max-sm:text-clamp(.85em,3vw,1em)] font-semibold tracking-[-0.03em]">
-                      {work.title}
-                    </h2>
-                  </div>
+
+                  <h2 className="mt-2 text-p font-semibold">{work.title}</h2>
                 </div>
               );
             })}

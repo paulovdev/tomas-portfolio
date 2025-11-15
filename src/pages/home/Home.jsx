@@ -25,7 +25,6 @@ const Home = () => {
     if (data?.media?.length) {
       setMedia(data.media);
 
-      // preload somente para imagens
       data.media.forEach((item) => {
         if (item.asset.mimeType?.startsWith("image/")) {
           const preload = new Image();
@@ -33,7 +32,7 @@ const Home = () => {
         }
       });
 
-      setTimeout(() => setLoadingDone(true), 1000);
+      setTimeout(() => setLoadingDone(true), 1500);
     }
   };
 
@@ -49,7 +48,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [media]);
 
-  // CORRIGIDO
   if (!media.length) return null;
 
   const current = media[index];

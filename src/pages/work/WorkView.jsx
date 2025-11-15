@@ -1,52 +1,102 @@
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { urlFor } from "../../lib/sanityImage";
-import { useEffect, useState, memo, useRef } from "react";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
 import Lenis from "lenis";
 
-const ProjectImages = memo(({ images, title }) => {
+// COMPONENTE DE IMAGENS + VÍDEOS
+const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
-    urlFor(asset).width(1200).quality(80).auto("format").url();
+    urlFor(asset).width(1600).quality(80).auto("format").url();
 
   return (
-    <div className="flex flex-col gap-4">
-      {images.map((img, index) => {
-        if (!img?.asset) return null;
+    <div className="flex flex-col gap-6">
+      {media.map((item, index) => {
+        const asset = item.asset;
+        if (!asset) return null;
+
+        const isVideo = asset.mimeType?.startsWith("video/");
+        const isImage = asset.mimeType?.startsWith("image/");
+
+        // 🔥 LAYOUT IGUAL AO ANTIGO:
         const pos = index % 3;
 
+        // --------------------------
+        // CASE 1: IMAGE FULL WIDTH
+        // --------------------------
         if (pos === 0) {
           return (
-            <img
-              key={index}
-              src={getUrl(img.asset)}
-              alt={img.alt || title}
-              loading="lazy"
-              className="w-full h-[75vh] object-cover max-md:h-[50vh]"
-            />
+            <div key={index}>
+              {isVideo ? (
+                <video
+                  src={asset.url}
+                  muted
+                  autoPlay
+                  loop
+                  playsInline
+                  className="w-full h-[75vh] object-cover"
+                />
+              ) : (
+                <img
+                  src={getUrl(asset)}
+                  alt={item.alt || title}
+                  loading="lazy"
+                  className="w-full h-[75vh] object-cover"
+                />
+              )}
+            </div>
           );
         }
 
+        // --------------------------
+        // CASE 2: GRID 2 COLUNAS
+        // --------------------------
         if (pos === 1) {
-          const nextImg = images[index + 1];
+          const next = media[index + 1];
           return (
             <div key={"group-" + index} className="grid grid-cols-2 gap-4">
-              <img
-                src={getUrl(img.asset)}
-                alt={img.alt || title}
-                loading="lazy"
-                className="w-full h-[75vh] object-cover max-md:h-[50vh]"
-              />
-              {nextImg?.asset && (
+              {/* MAIN */}
+              {isVideo ? (
+                <video
+                  src={asset.url}
+                  muted
+                  autoPlay
+                  loop
+                  playsInline
+                  className="w-full h-[75vh] object-cover"
+                />
+              ) : (
                 <img
-                  src={getUrl(nextImg.asset)}
-                  alt={nextImg.alt || title}
+                  src={getUrl(asset)}
+                  alt={item.alt || title}
                   loading="lazy"
-                  className="w-full h-[75vh] object-cover max-md:h-[50vh]"
+                  className="w-full h-[75vh] object-cover"
                 />
               )}
+
+              {/* SECOND */}
+              {next?.asset &&
+                (next.asset.mimeType.startsWith("video/") ? (
+                  <video
+                    key={next._id}
+                    src={next.asset.url}
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                    className="w-full h-[75vh] object-cover"
+                  />
+                ) : (
+                  <img
+                    src={getUrl(next.asset)}
+                    alt={next.alt || title}
+                    loading="lazy"
+                    className="w-full h-[75vh] object-cover"
+                  />
+                ))}
             </div>
           );
         }
@@ -55,7 +105,7 @@ const ProjectImages = memo(({ images, title }) => {
       })}
     </div>
   );
-});
+};
 
 const WorkView = () => {
   const lenisRef = useRef(null);
@@ -64,11 +114,13 @@ const WorkView = () => {
     lenisRef.current = lenis;
     return () => lenis.destroy();
   }, []);
+
   const { workId } = useParams();
-  const setProject = useProjectStore((state) => state.setProject);
+  const navigate = useNavigate();
+  const setProject = useProjectStore((s) => s.setProject);
+
   const [projectData, setProjectData] = useState(null);
   const [relatedProjects, setRelatedProjects] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +131,14 @@ const WorkView = () => {
           description,
           year,
           website,
-          images[] { alt, asset }
+          media[]{
+            alt,
+            asset->{
+              _id,
+              url,
+              mimeType
+            }
+          }
         }`,
         { slug: workId }
       );
@@ -88,7 +147,14 @@ const WorkView = () => {
         `*[_type == "works" && slug.current != $slug] | order(year desc)[0...3]{
           title,
           "slug": slug.current,
-          images[] { alt, asset }
+          media[]{
+            alt,
+            asset->{
+              _id,
+              url,
+              mimeType
+            }
+          }
         }`,
         { slug: workId }
       );
@@ -98,46 +164,50 @@ const WorkView = () => {
       setRelatedProjects(related);
     };
 
-    if (workId) fetchData();
-  }, [workId, setProject]);
+    fetchData();
+  }, [workId]);
 
-  const handleOpenProject = (slug) => {
-    navigate(`/works/${slug}`);
-  };
+  const handleOpenProject = (slug) => navigate(`/works/${slug}`);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [workId]);
+
   return (
     <>
       <ProjectNav />
 
       {!projectData ? (
-        <section className="relative h-screen flex items-center justify-center bg-s z-10">
+        <section className="relative h-screen flex items-center justify-center bg-s">
           <p className="text-s/50">Loading...</p>
         </section>
       ) : (
         <>
           <section className="relative pt-30 p-4 min-h-screen bg-s">
-            <ProjectImages
-              images={projectData.images}
-              title={projectData.title}
-            />
+            {projectData.media?.length > 0 ? (
+              <ProjectMedia
+                media={projectData.media}
+                title={projectData.title}
+              />
+            ) : (
+              <p className="text-center text-s/50">No media available</p>
+            )}
           </section>
 
+          {/* RELATED */}
           {relatedProjects.length > 0 && (
-            <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col max-md:items-start">
-              <h2 className="text-p text-[clamp(1em,5vw,1em)] max-sm:text-clamp(.85em,3vw,1em)] font-semibold tracking-[-0.03em]">
-                Related Works
-              </h2>
-              <div className="w-full grid grid-cols-3 gap-4">
+            <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col">
+              <h2 className="text-p font-semibold">Related Works</h2>
+
+              <div className="grid grid-cols-3 gap-4 w-full">
                 {relatedProjects.map((proj) => {
-                  const imageUrl = proj.images?.[0]?.asset
-                    ? urlFor(proj.images[0].asset)
-                        .width(800)
-                        .quality(50)
-                        .auto("format")
-                        .url()
-                    : "";
+                  const asset = proj.media?.[0]?.asset;
+                  if (!asset) return null;
+
+                  const isVideo = asset.mimeType.startsWith("video/");
+                  const isImage = asset.mimeType.startsWith("image/");
+
+                  const thumb = isImage ? urlFor(asset).width(800).url() : null;
 
                   return (
                     <div
@@ -145,14 +215,23 @@ const WorkView = () => {
                       className="relative cursor-pointer overflow-hidden group"
                       onClick={() => handleOpenProject(proj.slug)}
                     >
-                      {imageUrl && (
+                      {isVideo ? (
+                        <video
+                          src={asset.url}
+                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all"
+                          muted
+                          loop
+                          autoPlay
+                          playsInline
+                        />
+                      ) : (
                         <img
-                          src={imageUrl}
-                          alt={proj.images?.[0]?.alt || proj.title}
-                          loading="lazy"
-                          className="w-full h-[500px] object-cover brightness-75 group-hover:brightness-100 transition-all duration-500 max-ds:h-[350px] max-lg:h-[250px] max-md:h-[175px]"
+                          src={thumb}
+                          alt={proj.media?.[0]?.alt || proj.title}
+                          className="w-full h-[350px] object-cover brightness-75 group-hover:brightness-100 transition-all"
                         />
                       )}
+
                       <h3 className="mt-2 text-p font-semibold">
                         {proj.title}
                       </h3>
