@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
@@ -14,19 +14,13 @@ const ProjectMedia = ({ media, title }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      {media.map((item, index) => {
+      {media?.map((item, index) => {
         const asset = item.asset;
         if (!asset) return null;
 
         const isVideo = asset.mimeType?.startsWith("video/");
-        const isImage = asset.mimeType?.startsWith("image/");
-
-        // 🔥 LAYOUT IGUAL AO ANTIGO:
         const pos = index % 3;
 
-        // --------------------------
-        // CASE 1: IMAGE FULL WIDTH
-        // --------------------------
         if (pos === 0) {
           return (
             <div key={index}>
@@ -51,14 +45,11 @@ const ProjectMedia = ({ media, title }) => {
           );
         }
 
-        // --------------------------
-        // CASE 2: GRID 2 COLUNAS
-        // --------------------------
         if (pos === 1) {
           const next = media[index + 1];
+
           return (
             <div key={"group-" + index} className="grid grid-cols-2 gap-4">
-              {/* MAIN */}
               {isVideo ? (
                 <video
                   src={asset.url}
@@ -77,7 +68,6 @@ const ProjectMedia = ({ media, title }) => {
                 />
               )}
 
-              {/* SECOND */}
               {next?.asset &&
                 (next.asset.mimeType.startsWith("video/") ? (
                   <video
@@ -109,21 +99,35 @@ const ProjectMedia = ({ media, title }) => {
 
 const WorkView = () => {
   const lenisRef = useRef(null);
+  const { workId } = useParams();
+  const navigate = useNavigate();
+
+  // teu store
+  const { projects, setProject } = useProjectStore();
+
+  const [loading, setLoading] = useState(true);
+  const [relatedProjects, setRelatedProjects] = useState([]);
+
+  // Smooth scroll
   useEffect(() => {
     const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
     lenisRef.current = lenis;
     return () => lenis.destroy();
   }, []);
 
-  const { workId } = useParams();
-  const navigate = useNavigate();
-  const setProject = useProjectStore((s) => s.setProject);
-
-  const [projectData, setProjectData] = useState(null);
-  const [relatedProjects, setRelatedProjects] = useState([]);
-
   useEffect(() => {
-    const fetchData = async () => {
+    const load = async () => {
+      setLoading(true);
+
+      // 1) SE O PROJETO JÁ ESTÁ NO CACHE → usa
+      if (projects[workId]) {
+        const cached = projects[workId];
+        setRelatedProjects(cached.related || []);
+        setLoading(false);
+        return;
+      }
+
+      // 2) SENÃO → busca tudo
       const project = await client.fetch(
         `*[_type == "works" && slug.current == $slug][0]{
           title,
@@ -159,42 +163,39 @@ const WorkView = () => {
         { slug: workId }
       );
 
-      setProject(project);
-      setProjectData(project);
+      // 3) SALVA no ZUSTAND
+      setProject(workId, { ...project, related });
+
       setRelatedProjects(related);
+      setLoading(false);
     };
 
-    fetchData();
-  }, [workId]);
-
-  const handleOpenProject = (slug) => navigate(`/works/${slug}`);
-
-  useEffect(() => {
+    load();
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [workId]);
+
+  const project = projects[workId];
+
+  const openProject = (slug) => navigate(`/works/${slug}`);
 
   return (
     <>
       <ProjectNav />
 
-      {!projectData ? (
+      {loading || !project ? (
         <section className="relative h-screen flex items-center justify-center bg-s">
           <p className="text-s/50">Loading...</p>
         </section>
       ) : (
         <>
           <section className="relative pt-30 p-4 min-h-screen bg-s">
-            {projectData.media?.length > 0 ? (
-              <ProjectMedia
-                media={projectData.media}
-                title={projectData.title}
-              />
+            {project.media?.length > 0 ? (
+              <ProjectMedia media={project.media} title={project.title} />
             ) : (
               <p className="text-center text-s/50">No media available</p>
             )}
           </section>
 
-          {/* RELATED */}
           {relatedProjects.length > 0 && (
             <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col">
               <h2 className="text-p font-semibold">Related Works</h2>
@@ -205,15 +206,15 @@ const WorkView = () => {
                   if (!asset) return null;
 
                   const isVideo = asset.mimeType.startsWith("video/");
-                  const isImage = asset.mimeType.startsWith("image/");
-
-                  const thumb = isImage ? urlFor(asset).width(800).url() : null;
+                  const thumb = !isVideo
+                    ? urlFor(asset).width(800).url()
+                    : null;
 
                   return (
                     <div
                       key={proj.slug}
                       className="relative cursor-pointer overflow-hidden group"
-                      onClick={() => handleOpenProject(proj.slug)}
+                      onClick={() => openProject(proj.slug)}
                     >
                       {isVideo ? (
                         <video

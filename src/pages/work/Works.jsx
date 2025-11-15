@@ -5,10 +5,10 @@ import { urlFor } from "../../lib/sanityImage";
 import Nav from "../../components/navs/Nav";
 import Footer from "../../components/Footer";
 import Lenis from "lenis";
+import { useWorksStore } from "../../store/useWorksStore";
 
 const Works = () => {
   const navigate = useNavigate();
-  const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
   const lenisRef = useRef(null);
 
@@ -18,13 +18,20 @@ const Works = () => {
     return () => lenis.destroy();
   }, []);
 
+  const { works, setWorks } = useWorksStore();
+
   useEffect(() => {
+    if (works) {
+      setLoading(false);
+      return; // já temos cache → não faz request
+    }
+
     const fetchWorks = async () => {
       const data = await client.fetch(`
         *[_type == "works"]{
           _id,
           title,
-          slug,
+          "slug": slug.current,   // 🔥 AGORA É STRING
           media[]{
             alt,
             asset->{
@@ -36,15 +43,16 @@ const Works = () => {
         }
       `);
 
-      setWorks(data);
+      setWorks(data); // SAVE NO ZUSTAND
       setLoading(false);
     };
+
     fetchWorks();
   }, []);
 
   const handleOpen = useCallback(
     (slug) => {
-      navigate(`/works/${slug.current || slug}`);
+      navigate(`/works/${slug}`); // 🔥 slug agora é string sempre
     },
     [navigate]
   );
@@ -66,8 +74,8 @@ const Works = () => {
         ) : (
           <div className="grid grid-cols-4 gap-4 max-md:grid-cols-1 max-lg:grid-cols-3">
             {works.map((work) => {
-              const first = work.media?.[0]; // 👈 PEGA O PRIMEIRO
-              const asset = first?.asset; // 👈 aqui sim existe asset
+              const first = work.media?.[0];
+              const asset = first?.asset;
 
               if (!asset) return null;
 
@@ -83,7 +91,7 @@ const Works = () => {
                 <div
                   key={work._id}
                   className="relative mb-10 group overflow-hidden cursor-pointer"
-                  onClick={() => handleOpen(work.slug)}
+                  onClick={() => handleOpen(work.slug)} // 🔥 sempre string
                 >
                   {isVideo ? (
                     <video
@@ -101,7 +109,6 @@ const Works = () => {
                       className="w-full h-[500px] object-cover"
                     />
                   ) : (
-                    // FALLBACK REAL
                     <div className="w-full h-[500px] bg-[#E5E3DC]" />
                   )}
 

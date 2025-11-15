@@ -2,53 +2,55 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import client from "../../../client";
 import HomeNav from "../../components/navs/HomeNav";
+import { useHomeStore } from "../../store/useHomeStore";
 
 const Home = () => {
-  const [media, setMedia] = useState([]);
   const [index, setIndex] = useState(0);
   const [loadingDone, setLoadingDone] = useState(false);
 
-  const fetchHome = async () => {
-    const data = await client.fetch(`
-      *[_type == "home"][0]{ 
-        media[]{
-          alt,
-          asset->{
-            _id,
-            url,
-            mimeType
-          }
-        } 
-      }
-    `);
+  const { media, setMedia } = useHomeStore();
 
-    if (data?.media?.length) {
-      setMedia(data.media);
+  // -------------------------------
+  // FETCH — apenas se não existir cache
+  // -------------------------------
+  useEffect(() => {
+    if (media) return; // já temos cache → não busca
 
-      data.media.forEach((item) => {
-        if (item.asset.mimeType?.startsWith("image/")) {
-          const preload = new Image();
-          preload.src = item.asset.url;
+    const fetchHome = async () => {
+      const data = await client.fetch(`
+        *[_type == "home"][0]{ 
+          media[]{
+            alt,
+            asset->{
+              _id,
+              url,
+              mimeType
+            }
+          } 
         }
-      });
+      `);
 
-      setTimeout(() => setLoadingDone(true), 1500);
-    }
-  };
+      setMedia(data.media || []);
+    };
 
-  useEffect(() => {
     fetchHome();
-  }, []);
+  }, [media, setMedia]);
 
+  // -------------------------------
+  // SLIDESHOW — só quando media existir
+  // -------------------------------
   useEffect(() => {
-    if (!media.length) return;
+    if (!media || media.length === 0) return;
+
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % media.length);
     }, 3500);
+
     return () => clearInterval(interval);
   }, [media]);
 
-  if (!media.length) return null;
+  // Se ainda não tem mídia → nada a renderizar ainda
+  if (!media || media.length === 0) return null;
 
   const current = media[index];
   const isVideo = current.asset.mimeType?.startsWith("video/");
@@ -91,6 +93,7 @@ const Home = () => {
             initial={{ y: 0 }}
             animate={{ y: "-100%" }}
             transition={{ delay: 1, duration: 0.5, ease: "easeInOut" }}
+            onAnimationComplete={() => setLoadingDone(true)}
           >
             <motion.h1
               className="text-[clamp(5em,3vw,8em)] font-medium text-p tracking-[0.05em] select-none"
