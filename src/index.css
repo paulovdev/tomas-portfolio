@@ -52,13 +52,11 @@ body {
   line-height: 1.5;
   scroll-behavior: smooth;
   overflow-x: hidden;
+  min-height: 100%;
 
-  /* padding topo e base seguro iOS */
+  /* safe area iOS */
   padding-top: var(--safe-top);
   padding-bottom: var(--safe-bottom);
-
-  background-color: var(--color-bg);
-  color: var(--color-p);
 }
 
 /* ------------------- Scrollbar ------------------- */
