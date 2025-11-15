@@ -33,9 +33,6 @@ const Home = () => {
     fetchHome();
   }, [media, setMedia]);
 
-  // -------------------------------
-  // SLIDESHOW — só quando media existir
-  // -------------------------------
   useEffect(() => {
     if (!media || media.length === 0) return;
 
@@ -46,7 +43,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [media]);
 
-  // Se ainda não tem mídia → nada a renderizar ainda
   if (!media || media.length === 0) return null;
 
   const current = media[index];
@@ -62,7 +58,7 @@ const Home = () => {
             <motion.video
               key={current.asset._id}
               src={current.asset.url}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-screen object-cover"
               autoPlay
               muted
               loop
@@ -76,7 +72,7 @@ const Home = () => {
               key={current.asset._id}
               src={current.asset.url}
               alt={current.alt || ""}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-screen object-cover"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, transition: { duration: 0.5 } }}
