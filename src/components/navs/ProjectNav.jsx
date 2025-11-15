@@ -109,7 +109,7 @@ const ProjectNav = () => {
         </div>
       </nav>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         {projectModal && project && (
           <ProjectDescription
             project={project}

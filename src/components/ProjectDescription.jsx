@@ -33,22 +33,12 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
       // Salva a posição atual do scroll
       scrollPosRef.current = window.scrollY;
 
-      // Bloqueia scroll no body
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollPosRef.current}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
+      // Bloqueia scroll no body sem mudar width
       document.body.style.overflow = "hidden";
-      document.body.style.width = "100%";
 
       return () => {
         // Restaura scroll ao fechar
-        document.body.style.position = "";
-        document.body.style.top = "";
-        document.body.style.left = "";
-        document.body.style.right = "";
         document.body.style.overflow = "";
-        document.body.style.width = "";
         window.scrollTo(0, scrollPosRef.current);
       };
     }
@@ -71,7 +61,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="h-full p-4 pt-4"
+              className="size-full p-4 pt-4"
             >
               <nav className="mb-20 flex items-center justify-between">
                 <p
