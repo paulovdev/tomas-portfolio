@@ -19,11 +19,11 @@ const HomeNav = () => {
         
       `}
           >
-            BOTH
+            T—ML
           </Link>
         </div>
 
-        <div className="flex justify-center  gap-1 max-md:hidden">
+        <div className="flex justify-start  gap-1 max-md:hidden">
           <Link
             to="/works"
             className={`text-[1em] text-s font-medium tracking-[-0.03em]
@@ -55,11 +55,11 @@ const HomeNav = () => {
         <div className="max-md:flex justify-center  gap-1 hidden">
           <Link
             to="/"
-            className={`text-[1em] text-s font-medium tracking-[-0.03em]
+            className={`text-[1em] text-s font-medium tracking-[-0.03em] truncate
         
       `}
           >
-            BOTH,
+            T—ML,
           </Link>
           <Link
             to="/works"

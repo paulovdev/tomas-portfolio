@@ -24,22 +24,22 @@ const ProjectNav = () => {
         className={`
     fixed top-0 left-0 p-4 py-2 w-full
     grid grid-cols-4 items-center mix-blend-exclusion max-md:flex max-md:justify-between max-md:items-center
-    z-100
+    z-200
      
   `}
       >
         <div className="flex justify-start max-md:hidden">
           <Link
             to="/"
-            className={`text-[1em] text-s font-medium tracking-[-0.03em]
+            className={`text-[1em] text-s font-medium tracking-[-0.03em] truncate
         
       `}
           >
-            BOTH
+            T—ML
           </Link>
         </div>
 
-        <div className="flex justify-center  gap-1 max-md:hidden">
+        <div className="flex justify-start gap-1 max-md:hidden">
           <Link
             to="/works"
             className={`text-[1em] text-s font-medium tracking-[-0.03em]
@@ -75,7 +75,7 @@ const ProjectNav = () => {
         
       `}
           >
-            BOTH,
+            T—ML,
           </Link>
           <Link
             to="/works"

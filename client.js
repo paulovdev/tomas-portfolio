@@ -5,7 +5,7 @@ const client = createClient({
   dataset: import.meta.env.VITE_PUBLIC_SANITY_PROJECT_DATASET,
   token: import.meta.env.VITE_PUBLIC_SANITY_PROJECT_WRITE_TOKEN,
   apiVersion: "2024-01-01",
-  useCdn: false,
+  useCdn: true,
 });
 
 export default client;

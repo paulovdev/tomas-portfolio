@@ -1,10 +1,13 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { motion } from "framer-motion";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
+import { urlFor } from "../../lib/sanityImage";
+import Lenis from "lenis";
+import { useEffect, useRef, useState } from "react";
 
 const opacityAnim = {
   initial: { opacity: 0 },
@@ -26,10 +29,7 @@ const fetcher = (slug) =>
       description,
       year,
       website,
-      images[] {
-        alt,
-        "url": asset->url
-      }
+      images[] { alt, asset }
     }`,
     { slug }
   );
@@ -37,37 +37,78 @@ const fetcher = (slug) =>
 const WorkView = () => {
   const { workId } = useParams();
   const setProject = useProjectStore((state) => state.setProject);
+  const [relatedProjects, setRelatedProjects] = useState([]);
+  const lenisRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 0.6,
+      smoothTouch: true,
+      touchMultiplier: 1.3,
+    });
+    lenisRef.current = lenis;
+    return () => lenis.destroy();
+  }, []);
 
   const { data: project, isLoading } = useSWR(
     workId ? ["work", workId] : null,
     () => fetcher(workId),
     {
-      onSuccess: (data) => setProject(data), // mantém sincronizado com sua store
-      revalidateOnFocus: false, // opcional: evita re-fetch quando volta para a aba
+      onSuccess: (data) => setProject(data),
+      revalidateOnFocus: false,
     }
   );
 
+  useEffect(() => {
+    if (!workId) return;
+
+    const fetchRelated = async () => {
+      const data = await client.fetch(
+        `*[_type == "works" && slug.current != $slug] | order(year desc)[0...3]{
+          title,
+          "slug": slug.current,
+          images[] { alt, asset }
+        }`,
+        { slug: workId }
+      );
+      setRelatedProjects(data);
+    };
+
+    fetchRelated();
+  }, [workId]);
+
   if (isLoading || !project) {
     return (
-      <section className="relative min-h-screen flex items-center justify-center bg-s" />
+      <section className="relative h-screen flex items-center justify-center bg-s z-10" />
     );
   }
+
+  const handleOpenProject = (slug) => {
+    navigate(`/works/${slug}`);
+  };
 
   return (
     <>
       <ProjectNav />
+
       <section className="relative pt-30 p-4 min-h-screen bg-s">
         <div className="flex flex-col gap-4">
           {project.images?.map((img, index) => {
-            // posição dentro do ciclo de 3: 0(full), 1(col), 2(col)
+            if (!img?.asset) return null;
             const pos = index % 3;
+            const getUrl = (asset) =>
+              urlFor(asset).width(2000).quality(75).auto("format").url();
 
-            // FULL WIDTH
             if (pos === 0) {
               return (
                 <motion.img
                   key={index}
-                  src={img.url}
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  src={getUrl(img.asset)}
                   alt={img.alt || project.title}
                   className="w-full h-auto object-cover"
                   {...opacityAnim}
@@ -75,25 +116,27 @@ const WorkView = () => {
               );
             }
 
-            // DUAS COLUNAS (pos 1 e 2)
             if (pos === 1) {
-              // quando for pos 1, renderizamos um bloco com pos1 e pos2 juntos
+              const nextImg = project.images[index + 1];
               return (
                 <div key={"group-" + index} className="grid grid-cols-2 gap-4">
-                  {/* imagem atual */}
                   <motion.img
-                    src={img.url}
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority="low"
+                    src={getUrl(img.asset)}
                     alt={img.alt || project.title}
-                    className="w-full h-[75vh] object-cover max-md:h-[50vh]"
+                    className="w-full h-auto object-cover"
                     {...opacityAnim}
                   />
-
-                  {/* próxima imagem (se existir) */}
-                  {project.images[index + 1] && (
+                  {nextImg?.asset && (
                     <motion.img
-                      src={project.images[index + 1].url}
-                      alt={project.images[index + 1].alt || project.title}
-                      className="w-full h-[75vh] object-cover max-md:h-[50vh]"
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority="low"
+                      src={getUrl(nextImg.asset)}
+                      alt={nextImg.alt || project.title}
+                      className="w-full h-auto object-cover"
                       {...opacityAnim}
                     />
                   )}
@@ -101,11 +144,52 @@ const WorkView = () => {
               );
             }
 
-            // pos === 2 → já foi renderizado junto com o pos1
             return null;
           })}
         </div>
       </section>
+
+      {relatedProjects.length > 0 && (
+        <section className="pt-10 pb-20 px-4 w-full grid grid-cols-2 gap-4 max-md:flex max-md:flex-col max-md:items-start ">
+          <h2 className=" text-p text-[1em] font-semibold tracking-[-0.03em]">
+            Related Works
+          </h2>
+          <div className="w-full grid grid-cols-3 gap-4">
+            {relatedProjects.map((proj, i) => {
+              const imageUrl = proj.images?.[0]?.asset
+                ? urlFor(proj.images[0].asset)
+                    .width(1600)
+                    .quality(70)
+                    .auto("format")
+                    .url()
+                : "";
+
+              return (
+                <motion.div
+                  key={proj.slug}
+                  className="relative cursor-pointer overflow-hidden group"
+                  onClick={() => handleOpenProject(proj.slug)}
+                  {...opacityAnim}
+                  custom={i}
+                >
+                  {imageUrl && (
+                    <img
+                      src={imageUrl}
+                      alt={proj.images?.[0]?.alt || proj.title}
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority="low"
+                      {...opacityAnim}
+                      className="w-full h-[500px] object-cover brightness-75 group-hover:brightness-100 transition-all duration-500 max-ds:h-[350px] max-lg:h-[250px] max-md:h-[175px]"
+                    />
+                  )}
+                  <h3 className="mt-2 text-p font-semibold">{proj.title}</h3>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <Footer />
     </>

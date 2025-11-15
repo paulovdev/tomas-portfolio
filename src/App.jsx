@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
-import Nav from "./components/Nav";
 import Home from "./pages/home/Home";
 import Transition from "./loaders/Transition";
 import Works from "./pages/work/Works";

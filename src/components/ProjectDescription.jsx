@@ -28,7 +28,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
   return (
     <>
       <motion.div
-        className="fixed top-0 right-0 max-w-[50vw] h-screen bg-[#F0EEE6] z-130 max-lg:max-w-screen"
+        className="fixed top-0 right-0 max-w-[50vw] h-screen bg-[#F0EEE6] max-lg:max-w-screen z-2000"
         variants={modalAnim}
         initial="initial"
         animate="animate"

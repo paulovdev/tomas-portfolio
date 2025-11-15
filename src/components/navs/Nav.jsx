@@ -4,7 +4,12 @@ import Clock from "./Clock";
 const Nav = () => {
   const { pathname } = useLocation();
 
-  const isActive = (href) => (pathname === href ? "text-s" : "text-s/50");
+  const isActive = (href) => {
+    if (pathname === "/works") {
+      return pathname === href ? "text-s/50" : "text-s";
+    }
+    return pathname === href ? "text-s" : "text-s/50";
+  };
 
   return (
     <>
@@ -17,19 +22,19 @@ const Nav = () => {
         `}
       >
         {/* LEFT – DESKTOP */}
-        <div className="flex justify-start max-md:hidden">
+        <div className="flex content-start justify-start max-md:hidden">
           <Link
             to="/"
-            className={`text-[1em] font-medium tracking-[-0.03em] ${isActive(
+            className={`text-[1em] text-s! font-medium tracking-[-0.03em] ${isActive(
               "/"
             )}`}
           >
-            BOTH
+            T—ML
           </Link>
         </div>
 
         {/* CENTER – DESKTOP */}
-        <div className="flex justify-center  gap-1 max-md:hidden">
+        <div className="flex justify-start gap-1 max-md:hidden">
           <Link
             to="/works"
             className={`text-[1em] font-medium tracking-[-0.03em] ${isActive(
@@ -62,11 +67,11 @@ const Nav = () => {
         <div className="max-md:flex justify-center  gap-1 hidden">
           <Link
             to="/"
-            className={`text-[1em] font-medium tracking-[-0.03em] ${isActive(
-              "/"
-            )}`}
+            className={`text-[1em] text-s font-medium tracking-[-0.03em] truncate
+        
+      `}
           >
-            BOTH,
+            T—ML,
           </Link>
 
           <Link
