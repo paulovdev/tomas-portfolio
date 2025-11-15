@@ -72,7 +72,7 @@ const Home = () => {
             className="absolute inset-0 flex flex-col justify-center items-center bg-[#F0EEE6] z-200"
             initial={{ y: 0 }}
             animate={{ y: "-100%" }}
-            transition={{ delay: 1.2, duration: 0.8, ease: "easeInOut" }}
+            transition={{ delay: 1, duration: 0.5, ease: "easeInOut" }}
           >
             <motion.h1
               className="text-[clamp(5em,3vw,8em)] font-medium text-p tracking-[0.05em] select-none"
