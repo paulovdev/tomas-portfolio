@@ -110,7 +110,7 @@ const WorkView = () => {
                   fetchpriority="low"
                   src={getUrl(img.asset)}
                   alt={img.alt || project.title}
-                  className="w-full h-auto object-cover"
+                  className="w-full h-[75vh] object-cover"
                   {...opacityAnim}
                 />
               );
@@ -126,7 +126,7 @@ const WorkView = () => {
                     fetchpriority="low"
                     src={getUrl(img.asset)}
                     alt={img.alt || project.title}
-                    className="w-full h-auto object-cover"
+                    className="w-full h-[75vh] object-cover max-md:h-[50vh]"
                     {...opacityAnim}
                   />
                   {nextImg?.asset && (
@@ -136,7 +136,7 @@ const WorkView = () => {
                       fetchpriority="low"
                       src={getUrl(nextImg.asset)}
                       alt={nextImg.alt || project.title}
-                      className="w-full h-auto object-cover"
+                      className="w-full h-[75vh] object-cover max-md:h-[50vh]"
                       {...opacityAnim}
                     />
                   )}
