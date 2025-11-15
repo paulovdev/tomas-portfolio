@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import useSWR from "swr";
 import client from "../../../client";
 import HomeNav from "../../components/navs/HomeNav";
 import { urlFor } from "../../lib/sanityImage";
@@ -9,101 +8,90 @@ const clipAnim = {
   initial: { clipPath: "inset(0% 100% 0% 0%)" },
   animate: {
     clipPath: "inset(0% 0% 0% 0%)",
-    transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
   },
   exit: {
     clipPath: "inset(0% 0% 0% 100%)",
-    transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] },
+    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
   },
 };
 
-const fetcher = async (query) => {
-  const controller = new AbortController();
-  const { signal } = controller;
-  return await client.fetch(query, {}, { signal });
-};
-
 const Home = () => {
+  const [images, setImages] = useState([]);
   const [index, setIndex] = useState(0);
-  const [removeContent, setRemoveContent] = useState(false);
-  const intervalRef = useRef(null);
-  const indexRef = useRef(0);
+  const [loadingDone, setLoadingDone] = useState(false);
 
-  const { data, error, isLoading } = useSWR(
-    `*[_type == "home"][0]{ images[]{ alt, asset } }`,
-    fetcher,
-    {
-      dedupingInterval: 8000,
-      revalidateOnFocus: true,
-    }
-  );
+  useEffect(() => {
+    const fetchHome = async () => {
+      const data = await client.fetch(
+        `*[_type == "home"][0]{ images[]{ alt, asset } }`
+      );
+      if (data?.images?.length) {
+        setImages(data.images);
 
-  const images = data?.images || [];
-
-  const preload = (i) => {
-    const url = urlFor(images[i].asset).width(2000).quality(80).url();
-    const img = new Image();
-    img.src = url;
-  };
+        data.images.forEach((img) => {
+          const preload = new Image();
+          preload.src = urlFor(img.asset).width(2000).quality(80).url();
+        });
+      }
+    };
+    fetchHome();
+  }, []);
 
   useEffect(() => {
     if (!images.length) return;
-
-    intervalRef.current = setInterval(() => {
-      const next = (indexRef.current + 1) % images.length;
-      preload(next);
-
-      indexRef.current = next;
-      setIndex(next);
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
     }, 3500);
-
-    return () => clearInterval(intervalRef.current);
+    return () => clearInterval(interval);
   }, [images]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => setRemoveContent(true), 2000);
-    return () => clearTimeout(timeout);
-  }, []);
+  if (!images.length) return null;
 
-  if (isLoading || !images.length) return <section className="h-dvh bg-s" />;
-  if (error) return <section className="h-dvh bg-s" />;
+  const currentImage = images[index];
 
   return (
     <>
       <HomeNav />
-      <section className="relative h-dvh bg-p overflow-hidden">
+
+      <div className="relative h-dvh w-full overflow-hidden">
         <AnimatePresence mode="sync">
-          <motion.div
-            key={index}
-            variants={clipAnim}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className="absolute inset-0 w-full h-full"
-          >
-            <img
-              src={urlFor(images[index].asset).width(2000).quality(80).url()}
-              alt={images[index].alt || ""}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+          <motion.img
+            key={currentImage.asset._ref}
+            src={urlFor(currentImage.asset).width(2000).quality(80).url()}
+            alt={currentImage.alt || ""}
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.7 } }}
+            exit={{ opacity: 0, transition: { duration: 0.7 } }}
+          />
         </AnimatePresence>
 
-        <div className="relative z-10 flex items-center justify-center h-screen mix-blend-exclusion">
-          <AnimatePresence mode="wait">
-            {!removeContent && (
-              <motion.h1
-                className="text-[10em] font-light text-s tracking-[0.05em] select-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { duration: 0.5 } }}
-                exit={{ opacity: 0, transition: { duration: 0.5 } }}
-              >
-                T—ML
-              </motion.h1>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
+        {!loadingDone && (
+          <motion.div
+            className="absolute inset-0 flex flex-col justify-center items-center bg-[#F0EEE6] z-20"
+            initial={{ y: 0 }}
+            animate={{ y: "-100%" }}
+            transition={{ delay: 1.2, duration: 0.8, ease: "easeInOut" }}
+          >
+            <motion.h1
+              className="text-[clamp(5em,3vw,8em)] font-medium text-p tracking-[0.05em] select-none"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
+            >
+              T—ML
+            </motion.h1>
+
+            <motion.div
+              className="absolute bottom-0 left-0 h-2 bg-black"
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1 }}
+            />
+          </motion.div>
+        )}
+      </div>
     </>
   );
 };

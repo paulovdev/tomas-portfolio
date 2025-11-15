@@ -33,12 +33,7 @@ const services = {
 const About = () => {
   const lenisRef = useRef(null);
   useEffect(() => {
-    const lenis = new Lenis({
-      autoRaf: true,
-      duration: 0.6,
-      smoothTouch: true,
-      touchMultiplier: 1.3,
-    });
+    const lenis = new Lenis({ autoRaf: true, duration: 0.75 });
     lenisRef.current = lenis;
     return () => lenis.destroy();
   }, []);
