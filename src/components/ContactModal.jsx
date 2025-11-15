@@ -124,10 +124,10 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="Message"
               value={form.message}
               onChange={handleChange}
-              className="w-full h-[75px] border-b border-p/25 text-p  text-[.9em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="w-full h-[50px] border-b border-p/25 text-p  text-[.9em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
           </div>
-          <div className="relative flex items-end justify-end">
+          <div className="mb-8 relative flex items-end justify-end">
             <button
               type="submit"
               className="w-full text-p  text-[.9em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none text-start"

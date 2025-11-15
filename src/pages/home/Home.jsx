@@ -52,7 +52,10 @@ const Home = () => {
     <>
       <HomeNav />
 
-      <div className="relative h-dvh w-full overflow-hidden">
+      <div
+        className="relative h-svh 
+    max-md:h-[calc(var(--vh)*100)] w-full overflow-hidden"
+      >
         <AnimatePresence mode="sync">
           {isVideo ? (
             <motion.video

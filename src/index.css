@@ -30,10 +30,6 @@
   --safe-bottom: env(safe-area-inset-bottom);
 }
 
-* {
-  -webkit-transform: translateZ(0);
-}
-
 html,
 body {
   box-sizing: border-box;
@@ -49,4 +45,20 @@ body {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+:root {
+  --real-vh: 100vh;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --real-vh: 100%;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --real-vh: calc(var(--vh, 1vh) * 100);
+  }
 }

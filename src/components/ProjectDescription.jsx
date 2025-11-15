@@ -32,11 +32,18 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
     if (projectModal) {
       scrollPosRef.current = window.scrollY;
 
-      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.inset = "0px";
+      document.body.style.top = `-${scrollPosRef.current}px`;
+      document.body.style.width = "100%";
 
       return () => {
-        document.body.style.overflow = "";
-        window.scrollTo(0, scrollPosRef.current);
+        const y = Math.abs(parseInt(document.body.style.top || "0"));
+        document.body.style.position = "";
+        document.body.style.inset = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        window.scrollTo({ top: y });
       };
     }
   }, [projectModal]);
@@ -47,7 +54,14 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
         <>
           {/* Modal */}
           <motion.div
-            className="fixed top-0 right-0 max-w-[50vw] h-dvh overflow-y-auto bg-[#F0EEE6] max-lg:max-w-screen z-2000"
+            className="
+              fixed top-0 right-0 
+              max-w-[50vw] max-lg:max-w-screen
+              h-svh max-md:h-[calc(var(--vh)*100)]
+              overflow-y-auto 
+              bg-[#F0EEE6] 
+              z-2000
+            "
             variants={modalAnim}
             initial="initial"
             animate="animate"
@@ -62,7 +76,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
             >
               <nav className="mb-20 flex items-center justify-between">
                 <p
-                  className="text-p  text-[.9em] max-md:text-[1em]  max-md:text-[1em] font-bold tracking-[-0.03em] cursor-pointer"
+                  className="text-p text-[.9em] max-md:text-[1em] font-bold tracking-[-0.03em] cursor-pointer"
                   onClick={() => setProjectModal(false)}
                 >
                   Close
@@ -80,23 +94,23 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
 
               <div className="pb-10 flex items-end justify-end">
                 <div className="w-full flex items-start justify-between">
-                  <p className="text-p  text-[.9em] max-md:text-[1em]  max-md:text-[1em] font-bold tracking-[-0.03em]">
+                  <p className="text-p text-[.9em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                     Information
                   </p>
                   <ul>
                     <li className="flex items-center gap-2">
-                      <p className="text-p/75  text-[.9em] max-md:text-[1em]  max-md:text-[1em] font-bold tracking-[-0.03em]">
+                      <p className="text-p/75 text-[.9em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                         Year:
                       </p>
-                      <p className="text-p  text-[.9em] max-md:text-[1em]  max-md:text-[1em] font-semibold tracking-[-0.03em]">
+                      <p className="text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
                         {project.year}
                       </p>
                     </li>
                     <li className="flex items-center gap-2">
-                      <p className="text-p/75  text-[.9em] max-md:text-[1em]  max-md:text-[1em] font-bold tracking-[-0.03em]">
+                      <p className="text-p/75 text-[.9em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                         Website:
                       </p>
-                      <p className="text-p  text-[.9em] max-md:text-[1em]  max-md:text-[1em] font-semibold tracking-[-0.03em]">
+                      <p className="text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
                         {project.website}
                       </p>
                     </li>
@@ -108,7 +122,13 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
 
           {/* Backdrop */}
           <motion.div
-            className="fixed top-0 left-0 w-screen h-dvh bg-bg/15 backdrop-blur-lg z-1999"
+            className="
+              fixed top-0 left-0 
+              w-full
+              h-svh max-md:h-[calc(var(--vh)*100)]
+              bg-bg/15 backdrop-blur-lg 
+              z-1999
+            "
             variants={opacityAnim}
             initial="initial"
             animate="animate"
