@@ -84,12 +84,12 @@ const ContactModal = ({ setShowNewsletter }) => {
         {...opacityAnim}
       >
         <div className="mb-12 w-full flex items-center justify-between">
-          <p className="text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em]">
+          <p className="text-p text-[clamp(1em,5vw,1em) max-sm:text-clamp(.85em,3vw,1em)] font-medium tracking-[-0.03em]">
             Let's talk
           </p>
           <button
             onClick={() => setShowNewsletter(false)}
-            className="text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em]"
+            className="text-p text-[clamp(1em,5vw,1em) max-sm:text-clamp(.85em,3vw,1em)] font-medium tracking-[-0.03em]"
           >
             Close
           </button>
@@ -97,7 +97,7 @@ const ContactModal = ({ setShowNewsletter }) => {
 
         <form
           onSubmit={handleSubmit}
-          className="relative h-[220px] flex flex-col items-start justify-between gap-2"
+          className="relative h-[190px] flex flex-col items-start justify-between gap-2"
         >
           <div className="flex flex-col w-full h-full">
             <input
@@ -106,7 +106,7 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="Name"
               value={form.name}
               onChange={handleChange}
-              className="mb-4 w-full border-b border-p/25 text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="mb-4 w-full border-b border-p/25 text-p text-[clamp(1em,5vw,1em) max-sm:text-clamp(.85em,3vw,1em)] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
 
             <input
@@ -115,7 +115,7 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="E-mail"
               value={form.email}
               onChange={handleChange}
-              className="mb-4 w-full border-b border-p/25 text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="mb-4 w-full border-b border-p/25 text-p text-[clamp(1em,5vw,1em) max-sm:text-clamp(.85em,3vw,1em)] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
 
             <textarea
@@ -124,13 +124,13 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="Message"
               value={form.message}
               onChange={handleChange}
-              className="w-full h-[75px] border-b border-p/25 text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="w-full h-[75px] border-b border-p/25 text-p text-[clamp(1em,5vw,1em) max-sm:text-clamp(.85em,3vw,1em)] font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
           </div>
           <div className="relative flex items-end justify-end">
             <button
               type="submit"
-              className="w-full text-p text-[clamp(1em,3vw,1em) max-sm:clamp(.75em,3vw,1em) ] font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
+              className="w-full text-p text-[clamp(1em,5vw,1em) max-sm:text-clamp(.85em,3vw,1em)] font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
             >
               Send
             </button>
