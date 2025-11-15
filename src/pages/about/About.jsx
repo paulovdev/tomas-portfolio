@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Footer from "../../components/Footer";
 
 import Nav from "../../components/navs/Nav";
@@ -32,6 +33,16 @@ const services = {
 const About = () => {
   return (
     <>
+      {" "}
+      <Helmet>
+        {" "}
+        <meta charSet="utf-8" />
+        <title>Portfolio — Tomás • About</title>
+        <meta
+          name="description"
+          content="Learn more about Tomás, a designer focused on building brands with intention, purpose, and a clear voice. Experienced in brand strategy, art direction, and digital design creation."
+        />
+      </Helmet>
       <Nav />
       <section className="relative h-full px-4 py-24 bg-s text-p">
         <h2 className="max-w-[1000px] mb-25 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.1] max-md:text-[1.5em]">

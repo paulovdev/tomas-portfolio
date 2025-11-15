@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import client from "../../../client";
 import HomeNav from "../../components/navs/HomeNav";
 import { useHomeStore } from "../../store/useHomeStore";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const [index, setIndex] = useState(0);
@@ -50,8 +51,16 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        {" "}
+        <meta charSet="utf-8" />
+        <title>Portfolio — Tomás • Home</title>
+        <meta
+          name="description"
+          content="Hi, I’m Tomás, a graphic designer based in the Canary Islands. I specialize in brand strategy, art direction, and digital design, creating functional and contemporary identities with intent."
+        />
+      </Helmet>
       <HomeNav />
-
       <div
         className="relative h-svh 
     max-md:h-[calc(var(--vh)*100)] w-full overflow-hidden"

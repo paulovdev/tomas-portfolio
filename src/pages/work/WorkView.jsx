@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { urlFor } from "../../lib/sanityImage";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
 
+// Componente para renderizar mídia (imagens e vídeos)
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
     urlFor(asset).width(1600).quality(80).auto("format").url();
@@ -18,33 +21,31 @@ const ProjectMedia = ({ media, title }) => {
 
         const isVideo = asset.mimeType?.startsWith("video/");
         const pos = index % 3;
+        const next = media[index + 1];
 
         if (pos === 0) {
-          return (
-            <div key={index}>
-              {isVideo ? (
-                <video
-                  src={asset.url}
-                  muted
-                  autoPlay
-                  loop
-                  playsInline
-                  className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
-                />
-              ) : (
-                <img
-                  src={getUrl(asset)}
-                  alt={item.alt || title}
-                  loading="lazy"
-                  className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
-                />
-              )}
-            </div>
+          return isVideo ? (
+            <video
+              key={index}
+              src={asset.url}
+              muted
+              autoPlay
+              loop
+              playsInline
+              className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
+            />
+          ) : (
+            <img
+              key={index}
+              src={getUrl(asset)}
+              alt={item.alt || title}
+              loading="lazy"
+              className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
+            />
           );
         }
 
-        if (pos === 1) {
-          const next = media[index + 1];
+        if (pos === 1 && next) {
           return (
             <div key={"group-" + index} className="grid grid-cols-2 gap-4">
               {isVideo ? (
@@ -64,7 +65,7 @@ const ProjectMedia = ({ media, title }) => {
                   className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
                 />
               )}
-              {next?.asset &&
+              {next.asset &&
                 (next.asset.mimeType.startsWith("video/") ? (
                   <video
                     key={next._id}
@@ -96,12 +97,12 @@ const ProjectMedia = ({ media, title }) => {
 const WorkView = () => {
   const { workId } = useParams();
   const navigate = useNavigate();
-
   const { projects, setProject } = useProjectStore();
 
   const [loading, setLoading] = useState(true);
   const [relatedProjects, setRelatedProjects] = useState([]);
 
+  // Carrega projeto e relacionados
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -160,31 +161,35 @@ const WorkView = () => {
   const project = projects[workId];
   const openProject = (slug) => navigate(`/works/${slug}`);
 
+  // Atualiza título e descrição dinamicamente
+  useEffect(() => {
+    if (project) {
+      document.title = `Portfolio — Tomás • ${project.title}`;
+    }
+  }, [project]);
+
   return (
     <>
+      {project && (
+        <Helmet>
+          <title>Portfolio — Tomás • {project.title}</title>
+          <meta
+            name="description"
+            content={
+              project.description ||
+              "Visual creation grounded in strategy, focused on functional and contemporary brand identities."
+            }
+          />
+        </Helmet>
+      )}
+
       <ProjectNav />
 
       {loading || !project ? (
+        // Skeleton loader
         <section className="relative pt-30 p-4 min-h-dvh bg-s">
           <div className="mb-6 flex flex-col gap-6">
             <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-            </div>
-          </div>
-          <div className="mb-6 flex flex-col gap-6">
-            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-            </div>
-          </div>
-          <div className="mb-6 flex flex-col gap-6">
-            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
-
             <div className="grid grid-cols-2 gap-4">
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
@@ -197,7 +202,7 @@ const WorkView = () => {
             {project.media?.length > 0 ? (
               <ProjectMedia media={project.media} title={project.title} />
             ) : (
-              <p className="text-center text-p  text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]">
+              <p className="text-center text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
                 No media available
               </p>
             )}
@@ -205,15 +210,13 @@ const WorkView = () => {
 
           {relatedProjects.length > 0 && (
             <section className="pt-10 pb-20 px-4 w-full grid grid-cols-3 gap-4 max-md:flex max-md:flex-col">
-              <h2 className="text-p text-[.9em] max-md:text-[1em]  font-semibold tracking-[-0.03em]">
+              <h2 className="text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
                 Related Works
               </h2>
-
               <div className="grid grid-cols-3 gap-4 w-full col-span-2">
                 {relatedProjects.map((proj) => {
                   const asset = proj.media?.[0]?.asset;
                   if (!asset) return null;
-
                   const isVideo = asset.mimeType.startsWith("video/");
                   const thumb = !isVideo
                     ? urlFor(asset).width(800).url()
@@ -228,7 +231,7 @@ const WorkView = () => {
                       {isVideo ? (
                         <video
                           src={asset.url}
-                          className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px]  max-md:h-[175px]"
+                          className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px] max-md:h-[175px]"
                           muted
                           loop
                           autoPlay
@@ -238,10 +241,9 @@ const WorkView = () => {
                         <img
                           src={thumb}
                           alt={proj.media?.[0]?.alt || proj.title}
-                          className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px]  max-md:h-[175px]"
+                          className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px] max-md:h-[175px]"
                         />
                       )}
-
                       <h3 className="mt-2 text-p font-semibold">
                         {proj.title}
                       </h3>

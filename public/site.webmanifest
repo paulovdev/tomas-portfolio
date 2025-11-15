@@ -1,0 +1,26 @@
+{
+  "theme_color": "#f6f8f9",
+  "background_color": "#0a0a0b",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "orientation": "any",
+  "display": "standalone",
+  "name": "paulovdev",
+  "short_name": "paulovdev",
+  "start_url": "https://www.paulovdev.site/",
+  "scope": "https://www.paulovdev.site/",
+  "description": "welcome to my portfolio! here you can find my projects, experience, and more about me.",
+  "id": "https://www.paulovdev.site/"
+}
