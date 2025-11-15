@@ -8,7 +8,7 @@ import { urlFor } from "../../lib/sanityImage";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
 
-// Componente para renderizar mídia (imagens e vídeos)
+ 
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
     urlFor(asset).width(1600).quality(80).auto("format").url();

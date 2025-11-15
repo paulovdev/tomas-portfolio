@@ -52,7 +52,6 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        {" "}
         <meta charSet="utf-8" />
         <title>Portfolio — Tomás • Home</title>
         <meta
