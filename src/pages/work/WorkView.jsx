@@ -48,12 +48,13 @@ const ProjectMedia = ({ media, title }) => {
               className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
             />
           ) : (
-            <img
+            <LazyLoadImage
               key={index}
               src={getUrl(asset)}
               alt={item.alt || title}
               {...priorityProps}
               className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
+              effect="blur"
             />
           );
         }
@@ -73,11 +74,13 @@ const ProjectMedia = ({ media, title }) => {
                   className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
                 />
               ) : (
-                <img
+                <LazyLoadImage
                   src={getUrl(asset)}
                   alt={item.alt || title}
                   {...priorityProps}
                   className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
+                  effect="blur"
+                  threshold={300}
                 />
               )}
 
@@ -93,11 +96,13 @@ const ProjectMedia = ({ media, title }) => {
                     className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
                   />
                 ) : (
-                  <img
+                  <LazyLoadImage
                     src={getUrl(next.asset)}
                     alt={next.alt || title}
-                    loading="lazy"
+                    {...priorityProps}
                     className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
+                    effect="blur"
+                    threshold={300}
                   />
                 ))}
             </div>
@@ -125,14 +130,12 @@ const WorkView = () => {
       const cached = projects[workId];
       const expired = isExpired(workId);
 
-      // Se existir no cache e NÃO estiver expirado → usa instantâneo
       if (cached && !expired) {
         setRelatedProjects(cached.related || []);
         setLoading(false);
         return;
       }
 
-      // Caso contrário, faz o fetch
       const project = await client.fetch(
         `*[_type == "works" && slug.current == $slug][0]{
         title,
@@ -276,6 +279,7 @@ const WorkView = () => {
                           src={thumb}
                           alt={proj.media?.[0]?.alt || proj.title}
                           effect="blur"
+                          threshold={300}
                           className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px] max-md:h-[175px]"
                         />
                       )}
