@@ -63,7 +63,7 @@ const Works = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Portfolio — Tomás • Works</title>
+        <title>Tomás — Works</title>
         <meta
           name="description"
           content="Explore Tomás’ design projects and works. Visual creation grounded in strategy, developing functional and contemporary brand identities built with intent."

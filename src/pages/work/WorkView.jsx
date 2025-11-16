@@ -185,7 +185,7 @@ const WorkView = () => {
 
   useEffect(() => {
     if (project) {
-      document.title = `Portfolio — Tomás • ${project.title}`;
+      document.title = `Tomás —  ${project.title}`;
     }
   }, [project]);
 
@@ -193,7 +193,7 @@ const WorkView = () => {
     <>
       {project && (
         <Helmet>
-          <title>Portfolio — Tomás • {project.title}</title>
+          <title>Tomás — {project.title}</title>
           <meta
             name="description"
             content={

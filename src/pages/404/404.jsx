@@ -7,7 +7,7 @@ const NotFound = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Portfolio — Tomás • Not Found</title>
+        <title>Tomás — Not Found</title>
         <meta name="description" />
       </Helmet>
       <Nav />

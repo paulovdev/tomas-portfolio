@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://paulovdev.site/sitemap.xml
+Sitemap: https://www.tomasml.com/sitemap.xml

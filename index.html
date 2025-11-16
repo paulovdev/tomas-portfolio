@@ -21,19 +21,28 @@
     <meta http-equiv="content-language" content="en" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <meta property="og:title" content="Portfolio — Tomás" />
+    <meta
+      property="og:title"
+      content="Tomás — Branding & Visual Identity Designer"
+    />
     <meta
       property="og:description"
       content="Visual creation grounded in strategy. I specialize in developing functional and contemporary brand identities with intent."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yourportfolio.com/" />
+    <meta property="og:url" content="https://tomasml.com/" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="Portfolio — Tomás" />
+    <meta
+      property="og:site_name"
+      content="Tomás — Branding & Visual Identity Designer"
+    />
 
     <!-- Twitter -->
     <meta name="twitter:site" content="@tomasdesign" />
-    <meta name="twitter:title" content="Portfolio — Tomás" />
+    <meta
+      name="twitter:title"
+      content="Tomás — Branding & Visual Identity Designer"
+    />
     <meta
       name="twitter:description"
       content="Visual creation grounded in strategy. I specialize in developing functional and contemporary brand identities with intent."
@@ -41,38 +50,21 @@
     <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://yourportfolio.com/" />
+    <link rel="canonical" href="https://tomasml.com/" />
 
     <!-- Favicons -->
-    <link rel="icon" type="image/gif" href="/favicon.gif" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="T—ML" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <title>Portfolio — Tomás</title>
+    <title>Tomás — Branding & Visual Identity Designer</title>
   </head>
   <body>
     <div id="root" class="noise"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
-      const frames = ["/f-1.png", "/f-2.png"];
-
-      let current = 0;
-      const changeFavicon = () => {
-        const link =
-          document.querySelector("link[rel~='icon']") ||
-          document.createElement("link");
-        link.rel = "icon";
-        link.href = frames[current];
-        document.head.appendChild(link);
-        current = (current + 1) % frames.length;
-      };
-
-      // Troca o favicon a cada 500ms (ajuste para mais rápido ou mais lento)
-      setInterval(changeFavicon, 500);
-    </script>
-
     <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>

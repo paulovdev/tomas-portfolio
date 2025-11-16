@@ -34,7 +34,7 @@ const Contact = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Portfolio — Tomás • Contact</title>
+        <title>Tomás — Contact</title>
         <meta
           name="description"
           content="App Description"

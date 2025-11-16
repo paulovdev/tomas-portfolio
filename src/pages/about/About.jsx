@@ -37,7 +37,7 @@ const About = () => {
       <Helmet>
         {" "}
         <meta charSet="utf-8" />
-        <title>Portfolio — Tomás • About</title>
+        <title>Tomás — About</title>
         <meta
           name="description"
           content="Learn more about Tomás, a designer focused on building brands with intention, purpose, and a clear voice. Experienced in brand strategy, art direction, and digital design creation."

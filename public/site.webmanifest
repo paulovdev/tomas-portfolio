@@ -1,6 +1,6 @@
 {
-  "theme_color": "#f6f8f9",
-  "background_color": "#0a0a0b",
+  "name": "Tomás — Branding & Visual Identity Designer",
+  "short_name": "T—ML",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,12 +15,13 @@
       "purpose": "maskable"
     }
   ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "orientation": "any",
-  "display": "standalone",
-  "name": "paulovdev",
-  "short_name": "paulovdev",
-  "start_url": "https://www.paulovdev.site/",
-  "scope": "https://www.paulovdev.site/",
-  "description": "welcome to my portfolio! here you can find my projects, experience, and more about me.",
-  "id": "https://www.paulovdev.site/"
+  "dir": "auto",
+  "lang": "en-EN",
+  "description": "Visual creation grounded in strategy. I specialize in developing functional and contemporary brand identities with intent.",
+  "start_url": "https://tomasml.com/",
+  "scope": "https://tomasml.com/",
+  "id": "https://tomasml.com/"
 }
