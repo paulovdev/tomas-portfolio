@@ -117,19 +117,45 @@ const ContactModal = ({ setShowNewsletter }) => {
               className="w-full h-[50px] border-b border-p/25 text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
           </div>
-          <div className="mb-8 relative flex items-end justify-end">
+          <div className="mb-8 relative flex flex-col items-end justify-end">
             <button
               type="submit"
-              className="w-full text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
+              className="mb-2 w-full text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
             >
               Send
             </button>
+            {status === "sending" && (
+              <motion.p
+                className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-medium tracking-[-0.03em]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                Sending...
+              </motion.p>
+            )}
+            {status === "success" && (
+              <motion.p
+                className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-medium tracking-[-0.03em]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                Message sent!
+              </motion.p>
+            )}
+            {status === "error" && (
+              <motion.p
+                className="text-red-500 text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-medium tracking-[-0.03em]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                Error sending message.
+              </motion.p>
+            )}
           </div>
         </form>
-
-        {status === "sending" && <p>Sending...</p>}
-        {status === "success" && <p>Message sent!</p>}
-        {status === "error" && <p>Error sending message.</p>}
       </motion.div>
     </motion.div>
   );
