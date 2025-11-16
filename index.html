@@ -21,7 +21,6 @@
     <meta http-equiv="content-language" content="en" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- Open Graph -->
     <meta property="og:title" content="Portfolio — Tomás" />
     <meta
       property="og:description"
@@ -45,7 +44,7 @@
     <link rel="canonical" href="https://yourportfolio.com/" />
 
     <!-- Favicons -->
-    <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
+    <link rel="icon" type="image/gif" href="/favicon.gif" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -56,6 +55,24 @@
   <body>
     <div id="root" class="noise"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      const frames = ["/f-1.png", "/f-2.png"];
+
+      let current = 0;
+      const changeFavicon = () => {
+        const link =
+          document.querySelector("link[rel~='icon']") ||
+          document.createElement("link");
+        link.rel = "icon";
+        link.href = frames[current];
+        document.head.appendChild(link);
+        current = (current + 1) % frames.length;
+      };
+
+      // Troca o favicon a cada 500ms (ajuste para mais rápido ou mais lento)
+      setInterval(changeFavicon, 500);
+    </script>
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
