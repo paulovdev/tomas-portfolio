@@ -8,17 +8,18 @@ import Footer from "../../components/Footer";
 
 import { useWorksStore } from "../../store/useWorksStore";
 
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const Works = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const { works, setWorks } = useWorksStore();
 
-  // Scroll para o topo ao montar a página
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
-  // Fetch dos trabalhos
   useEffect(() => {
     if (works) {
       setLoading(false);
@@ -49,7 +50,6 @@ const Works = () => {
     fetchWorks();
   }, []);
 
-  // Navegação para projeto individual
   const handleOpen = useCallback(
     (slug) => {
       navigate(`/works/${slug}`);
@@ -59,7 +59,6 @@ const Works = () => {
 
   return (
     <>
-      {/* Helmet para SEO */}
       <Helmet>
         <meta charSet="utf-8" />
         <title>Portfolio — Tomás • Works</title>
@@ -90,6 +89,7 @@ const Works = () => {
 
               const isVideo = asset.mimeType?.startsWith("video/");
               const isImage = asset.mimeType?.startsWith("image/");
+
               const imageUrl =
                 isImage && asset
                   ? urlFor(asset).width(1600).quality(70).auto("format").url()
@@ -111,10 +111,12 @@ const Works = () => {
                       playsInline
                     />
                   ) : imageUrl ? (
-                    <img
+                    <LazyLoadImage
                       src={imageUrl}
                       alt={first.alt || work.title}
-                      className="w-full h-[500px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
+                      effect="blur"
+                      wrapperClassName="w-full h-[500px] max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]"
+                      className="w-full h-full object-cover brightness-100 group-hover:brightness-75 transition-all"
                     />
                   ) : (
                     <div className="w-full h-[500px] bg-[#E5E3DC] max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]" />

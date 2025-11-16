@@ -6,7 +6,8 @@ import { useProjectStore } from "../../store/useProjectStore";
 import { urlFor } from "../../lib/sanityImage";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
     urlFor(asset).width(1600).quality(80).auto("format").url();
@@ -21,6 +22,18 @@ const ProjectMedia = ({ media, title }) => {
         const pos = index % 3;
         const next = media[index + 1];
 
+        const priorityProps =
+          index === 0
+            ? {
+                loading: "eager",
+                fetchpriority: "high",
+              }
+            : {
+                loading: "lazy",
+              };
+        const priorityVideoProps =
+          index === 0 ? { preload: "auto", fetchpriority: "high" } : {};
+
         if (pos === 0) {
           return isVideo ? (
             <video
@@ -30,6 +43,7 @@ const ProjectMedia = ({ media, title }) => {
               autoPlay
               loop
               playsInline
+              {...priorityVideoProps}
               className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
             />
           ) : (
@@ -37,12 +51,13 @@ const ProjectMedia = ({ media, title }) => {
               key={index}
               src={getUrl(asset)}
               alt={item.alt || title}
-              loading="lazy"
+              {...priorityProps}
               className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
             />
           );
         }
 
+        // GRID 2 COLS
         if (pos === 1 && next) {
           return (
             <div key={"group-" + index} className="grid grid-cols-2 gap-4">
@@ -53,16 +68,18 @@ const ProjectMedia = ({ media, title }) => {
                   autoPlay
                   loop
                   playsInline
+                  {...priorityVideoProps}
                   className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
                 />
               ) : (
                 <img
                   src={getUrl(asset)}
                   alt={item.alt || title}
-                  loading="lazy"
+                  {...priorityProps}
                   className="w-full h-[75vh] object-cover max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]"
                 />
               )}
+
               {next.asset &&
                 (next.asset.mimeType.startsWith("video/") ? (
                   <video
@@ -250,9 +267,10 @@ const WorkView = () => {
                           playsInline
                         />
                       ) : (
-                        <img
+                        <LazyLoadImage
                           src={thumb}
                           alt={proj.media?.[0]?.alt || proj.title}
+                          effect="blur"
                           className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px] max-md:h-[175px]"
                         />
                       )}
