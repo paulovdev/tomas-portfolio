@@ -16,7 +16,7 @@ const Contact = () => {
     {
       label: "Socials",
       value: ["Instagram", "Linkedin", "Behance"],
-      links: ["#", "#", "#"],
+      links: ["#", "https://www.linkedin.com/in/tomasmedinaleon/", "#"],
     },
     {
       label: "Email",
@@ -39,7 +39,7 @@ const Contact = () => {
           name="description"
           content="App Description"
           data-react-helmet="true"
-        /> 
+        />
         <meta
           name="description"
           content="Get in touch with Tomás, a graphic designer based in the Canary Islands. Collaborate, discuss projects, or inquire about brand strategy, art direction, and digital design services."
@@ -50,7 +50,7 @@ const Contact = () => {
 
       <section
         className="relative w-full h-svh max-md:h-[calc(var(--vh)*100)]
-        flex flex-col items-start justify-between pt-24 bg-s text-p"
+        flex flex-col items-start justify-between pt-35 max-md:pt-24 bg-s text-p"
       >
         {/* Headline */}
         <div className="px-4 mb-20 max-w-[1000px] flex-1">

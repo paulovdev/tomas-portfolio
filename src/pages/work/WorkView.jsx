@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
 import client from "../../../client";
 import { useProjectStore } from "../../store/useProjectStore";
 import { urlFor } from "../../lib/sanityImage";
 import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
 
- 
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
     urlFor(asset).width(1600).quality(80).auto("format").url();
@@ -102,7 +100,6 @@ const WorkView = () => {
   const [loading, setLoading] = useState(true);
   const [relatedProjects, setRelatedProjects] = useState([]);
 
-  // Carrega projeto e relacionados
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -161,7 +158,6 @@ const WorkView = () => {
   const project = projects[workId];
   const openProject = (slug) => navigate(`/works/${slug}`);
 
-  // Atualiza título e descrição dinamicamente
   useEffect(() => {
     if (project) {
       document.title = `Portfolio — Tomás • ${project.title}`;
@@ -186,10 +182,26 @@ const WorkView = () => {
       <ProjectNav />
 
       {loading || !project ? (
-        // Skeleton loader
         <section className="relative pt-30 p-4 min-h-dvh bg-s">
           <div className="mb-6 flex flex-col gap-6">
             <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+            </div>
+          </div>
+          <div className="mb-6 flex flex-col gap-6">
+            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+              <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+            </div>
+          </div>
+          <div className="mb-6 flex flex-col gap-6">
+            <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
+
             <div className="grid grid-cols-2 gap-4">
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
               <div className="w-full h-[75vh] bg-[#E5E3DC] animate-pulse max-ds:h-[550px] max-lg:h-[350px] max-md:h-[250px]" />
