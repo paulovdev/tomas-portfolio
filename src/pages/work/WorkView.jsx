@@ -8,6 +8,7 @@ import ProjectNav from "../../components/navs/ProjectNav";
 import Footer from "../../components/Footer";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+
 const ProjectMedia = ({ media, title }) => {
   const getUrl = (asset) =>
     urlFor(asset).width(1600).quality(80).auto("format").url();
@@ -112,7 +113,7 @@ const ProjectMedia = ({ media, title }) => {
 const WorkView = () => {
   const { workId } = useParams();
   const navigate = useNavigate();
-  const { projects, setProject } = useProjectStore();
+  const { projects, setProject, isExpired } = useProjectStore();
 
   const [loading, setLoading] = useState(true);
   const [relatedProjects, setRelatedProjects] = useState([]);
@@ -121,45 +122,49 @@ const WorkView = () => {
     const load = async () => {
       setLoading(true);
 
-      if (projects[workId]) {
-        const cached = projects[workId];
+      const cached = projects[workId];
+      const expired = isExpired(workId);
+
+      // Se existir no cache e NÃO estiver expirado → usa instantâneo
+      if (cached && !expired) {
         setRelatedProjects(cached.related || []);
         setLoading(false);
         return;
       }
 
+      // Caso contrário, faz o fetch
       const project = await client.fetch(
         `*[_type == "works" && slug.current == $slug][0]{
-          title,
-          "slug": slug.current,
-          description,
-          year,
-          website,
-          media[] {
-            alt,
-            asset->{
-              _id,
-              url,
-              mimeType
-            }
+        title,
+        "slug": slug.current,
+        description,
+        year,
+        website,
+        media[] {
+          alt,
+          asset->{
+            _id,
+            url,
+            mimeType
           }
-        }`,
+        }
+      }`,
         { slug: workId }
       );
 
       const related = await client.fetch(
         `*[_type == "works" && slug.current != $slug] | order(year desc)[0...3]{
-          title,
-          "slug": slug.current,
-          media[] {
-            alt,
-            asset->{
-              _id,
-              url,
-              mimeType
-            }
+        title,
+        "slug": slug.current,
+        media[] {
+          alt,
+          asset->{
+            _id,
+            url,
+            mimeType
           }
-        }`,
+        }
+      }`,
         { slug: workId }
       );
 
@@ -231,7 +236,7 @@ const WorkView = () => {
             {project.media?.length > 0 ? (
               <ProjectMedia media={project.media} title={project.title} />
             ) : (
-              <p className="text-center text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
+              <p className="text-center text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
                 No media available
               </p>
             )}
@@ -239,7 +244,7 @@ const WorkView = () => {
 
           {relatedProjects.length > 0 && (
             <section className="pt-10 pb-20 px-4 w-full grid grid-cols-3 gap-4 max-md:flex max-md:flex-col">
-              <h2 className="text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
+              <h2 className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
                 Related Works
               </h2>
               <div className="grid grid-cols-3 gap-4 w-full col-span-2">

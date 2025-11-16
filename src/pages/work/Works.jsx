@@ -14,34 +14,36 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 const Works = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { works, setWorks } = useWorksStore();
+  const { works, setWorks, isExpired } = useWorksStore();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
   useEffect(() => {
-    if (works) {
+    const shouldRefetch = !works || isExpired();
+
+    if (!shouldRefetch) {
       setLoading(false);
       return;
     }
 
     const fetchWorks = async () => {
       const data = await client.fetch(`
-        *[_type == "works"]{
-          _id,
-          title,
-          "slug": slug.current,
-          media[] {
-            alt,
-            asset->{
-              _id,
-              url,
-              mimeType
-            }
+      *[_type == "works"]{
+        _id,
+        title,
+        "slug": slug.current,
+        media[] {
+          alt,
+          asset->{
+            _id,
+            url,
+            mimeType
           }
         }
-      `);
+      }
+    `);
 
       setWorks(data);
       setLoading(false);
@@ -49,7 +51,7 @@ const Works = () => {
 
     fetchWorks();
   }, []);
-
+  
   const handleOpen = useCallback(
     (slug) => {
       navigate(`/works/${slug}`);
@@ -122,7 +124,7 @@ const Works = () => {
                     <div className="w-full h-[500px] bg-[#E5E3DC] max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]" />
                   )}
 
-                  <h2 className="mt-2 text-p text-[.9em] max-md:text-[1em] font-semibold">
+                  <h2 className="mt-2 text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold">
                     {work.title}
                   </h2>
                 </div>

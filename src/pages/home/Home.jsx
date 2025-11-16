@@ -49,6 +49,14 @@ const Home = () => {
   const current = media[index];
   const isVideo = current.asset.mimeType?.startsWith("video/");
 
+  const isLCP = index === 0;
+
+  const imageProps = isLCP
+    ? { loading: "eager", fetchpriority: "high" }
+    : { loading: "lazy" };
+
+  const videoProps = isLCP ? { preload: "auto", fetchpriority: "high" } : {};
+
   return (
     <>
       <Helmet>
@@ -59,10 +67,12 @@ const Home = () => {
           content="Hi, I’m Tomás, a graphic designer based in the Canary Islands. I specialize in brand strategy, art direction, and digital design, creating functional and contemporary identities with intent."
         />
       </Helmet>
+
       <HomeNav />
+
       <div
         className="relative h-svh 
-    max-md:h-[calc(var(--vh)*100)] w-full overflow-hidden"
+        max-md:h-[calc(var(--vh)*100)] w-full overflow-hidden"
       >
         <AnimatePresence mode="sync">
           {isVideo ? (
@@ -74,6 +84,7 @@ const Home = () => {
               muted
               loop
               playsInline
+              {...videoProps}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, transition: { duration: 0.5 } }}
@@ -84,6 +95,7 @@ const Home = () => {
               src={current.asset.url}
               alt={current.alt || ""}
               className="absolute inset-0 w-full h-screen object-cover"
+              {...imageProps}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, transition: { duration: 0.5 } }}
