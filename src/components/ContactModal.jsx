@@ -43,30 +43,20 @@ const ContactModal = ({ setShowNewsletter }) => {
     setStatus("sending");
 
     try {
-      const emailHtml = await render(
-        <Email
-          name={form.name}
-          message={form.message}
-          url="https://example.com"
-        />
-      );
-
       await emailjs.send(
-        "SEU_SERVICE_ID",
-        "SEU_TEMPLATE_ID",
+        "service_q66a7te",
+        "template_ash6cza",
         {
           from_name: form.name,
           from_email: form.email,
           message: form.message,
-          html_content: emailHtml,
         },
-        "SUA_PUBLIC_KEY"
+        "0j6AC4QElZ7rF8zIB"
       );
-
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
-      console.error(err);
+      console.error("EmailJS Error:", err);
       setStatus("error");
     }
   };
