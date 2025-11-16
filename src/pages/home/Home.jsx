@@ -161,7 +161,7 @@ const Home = () => {
           >
             <AnimatePresence>
               {!loadingText && (
-                <h1 className="text-[clamp(1.3em,3vw,5em)] font-light max-lg:font-medium text-p tracking-[-0.05em] max-md:tracking-[-0.04em] select-none flex flex-wrap">
+                <h1 className="text-[clamp(1em,5vw,3em)] font-light max-lg:font-medium text-p tracking-[-0.05em] max-md:tracking-[-0.05em] select-none flex flex-wrap">
                   <AnimatedLetters text="Tomás — Branding & Visual Identity Designer" />
                 </h1>
               )}
