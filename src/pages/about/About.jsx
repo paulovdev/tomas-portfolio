@@ -45,7 +45,7 @@ const About = () => {
       </Helmet>
       <Nav />
       <section className="relative h-full px-4 py-35 bg-s text-p max-md:py-24">
-        <h2 className="max-w-[90%] mb-25 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.1] max-md:text-[1.5em]">
+        <h2 className="max-w-[90%] mb-25 text-[1.75em] font-medium tracking-[-0.03em] leading-[1.1] max-md:text-[1.5em] max-md:max-w-full">
           Visual creation grounded in strategy, focused on developing functional
           and contemporary identities built with intent. The approach brings
           together strategy, creative direction, and design to shape systems
