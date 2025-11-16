@@ -3,31 +3,34 @@ const Footer = () => {
     <footer className="relative p-4 w-full border-t border-p/10 grid grid-cols-4 max-md:flex max-md:justify-between max-lg:items-end max-lg:gap-8">
       {/* DESKTOP */}
       <div className="w-full max-lg:w-1/3 max-md:hidden">
-        <p className="text-p text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.05em] truncate">
-          © T—ML 2025
+        <p className="text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.05em] truncate">
+          © T—ML {new Date().getFullYear()}
         </p>
       </div>
 
       <div className="flex flex-col col-start-3 max-md:hidden">
-        <p className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1">
+        <p className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1">
           Las Palmas de Gran Canaria, Spain
         </p>
         <div className="flex items-center ">
           <a
             href=""
-            className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1 hover:underline"
+            target="_blank"
+            className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1 hover:underline"
           >
             Instagram,
           </a>
           <a
-            href=""
-            className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1 hover:underline"
+            href="https://www.linkedin.com/in/tomasmedinaleon/"
+            target="_blank"
+            className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1 hover:underline"
           >
             Linkedin,
           </a>
           <a
             href=""
-            className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1 hover:underline"
+            target="_blank"
+            className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1 hover:underline"
           >
             Behance
           </a>
@@ -51,35 +54,52 @@ const Footer = () => {
       {/* MOBILE */}
       <div className="w-full flex-col items-start max-md:flex hidden">
         <div className="flex flex-col">
-          <p className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1">
+          <p className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1">
             Las Palmas de Gran Canaria, Spain
           </p>
 
-          <a
-            href=""
-            className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1"
-          >
-            Instagram, Linkedin, Behance
-          </a>
+          <div className="flex items-center ">
+            <a
+              href=""
+              target="_blank"
+              className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1 hover:underline"
+            >
+              Instagram,
+            </a>
+            <a
+              href="https://www.linkedin.com/in/tomasmedinaleon/"
+              target="_blank"
+              className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1 hover:underline"
+            >
+              Linkedin,
+            </a>
+            <a
+              href=""
+              target="_blank"
+              className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1 hover:underline"
+            >
+              Behance
+            </a>
+          </div>
         </div>
         <div className="flex flex-col">
           <a
             href=""
-            className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1"
+            className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1"
           >
             hey@tomasml.com
           </a>
           <a
             href=""
-            className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.03em] ml-1"
+            className="text-p  text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.03em] ml-1"
           >
             +(34) 625 551 094
           </a>
         </div>
       </div>
       <div className="w-1/3 max-md:flex items-end justify-end hidden">
-        <p className="text-p  text-[.9em] max-md:text-[1em]   font-semibold tracking-[-0.05em] truncate">
-          © T—ML 2025
+        <p className="text-p text-[.9em] max-md:text-[1em] font-semibold tracking-[-0.05em] truncate">
+          © T—ML {new Date().getFullYear()}
         </p>
       </div>
     </footer>

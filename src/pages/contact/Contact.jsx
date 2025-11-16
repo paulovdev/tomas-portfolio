@@ -52,8 +52,7 @@ const Contact = () => {
         className="relative w-full h-svh max-md:h-[calc(var(--vh)*100)]
         flex flex-col items-start justify-between pt-35 max-md:pt-24 bg-s text-p"
       >
-        {/* Headline */}
-        <div className="px-4 mb-20 max-w-[1000px] flex-1">
+        <div className="px-4 mb-20 flex-1">
           <h2 className="text-[1.75em] font-medium tracking-[-0.03em] leading-[1.1] max-md:text-[1.5em]">
             If you’d like to discuss a project or learn more about our process,
           </h2>
@@ -62,7 +61,6 @@ const Contact = () => {
           </h2>
         </div>
 
-        {/* Contact Info */}
         <div className="px-4 mb-15 flex-2 w-full grid grid-cols-4 gap-8 border-t border-black/10 pt-8">
           <p className="text-p text-[.9em] max-md:text-[1em] font-bold tracking-[-0.03em]">
             Contact
@@ -70,7 +68,6 @@ const Contact = () => {
           <div className="col-span-3 space-y-0.5">
             {contactInfo.map((info, i) => {
               if (Array.isArray(info.value)) {
-                // Social links
                 return (
                   <p
                     key={i}
@@ -93,7 +90,6 @@ const Contact = () => {
               }
 
               if (info.href) {
-                // Email or phone
                 return (
                   <p
                     key={i}
