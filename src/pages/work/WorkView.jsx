@@ -140,9 +140,7 @@ const WorkView = () => {
         `*[_type == "works" && slug.current == $slug][0]{
         title,
         "slug": slug.current,
-        description,
-        year,
-        website,
+         
         media[] {
           alt,
           asset->{
