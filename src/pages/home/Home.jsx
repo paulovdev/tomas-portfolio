@@ -49,13 +49,7 @@ const textSlideAnim = {
 
 const Home = () => {
   const [index, setIndex] = useState(0);
-  const [loadingText, setLoadingText] = useState(false);
   const [loadingDone, setLoadingDone] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoadingText(true);
-    }, 1300);
-  }, []);
 
   const { media, setMedia } = useHomeStore();
 
@@ -159,15 +153,12 @@ const Home = () => {
             transition={{ delay: 1.5, duration: 0.5, ease: "easeInOut" }}
             onAnimationComplete={() => setLoadingDone(true)}
           >
-            <AnimatePresence>
-              {!loadingText && (
-                <h1 className="text-[clamp(1em,5vw,3em)] font-light max-lg:font-medium text-p tracking-[-0.05em] max-md:tracking-[-0.05em] select-none flex flex-wrap">
-                  <AnimatedLetters text="Tomás — Branding & Visual Identity Designer" />
-                </h1>
-              )}
-            </AnimatePresence>
+            <h1 className="text-[1em] font-medium text-p tracking-[-0.05em] max-md:tracking-[-0.05em] select-none flex flex-wrap">
+              <AnimatedLetters text="Tomás — Branding & Visual Identity Designer" />
+            </h1>
+
             <motion.div
-              className="absolute bottom-0 left-0 h-2 max-md:h-1.5 bg-black"
+              className="absolute bottom-0 left-0 h-1 bg-black"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 1, delay: 0.15 }}
