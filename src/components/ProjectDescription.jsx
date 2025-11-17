@@ -102,7 +102,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
                       <p className="text-p/75 text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                         Year:
                       </p>
-                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
+                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
                         {project.year}
                       </p>
                     </li>
@@ -110,7 +110,7 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
                       <p className="text-p/75 text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                         Website:
                       </p>
-                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]">
+                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
                         {project.website}
                       </p>
                     </li>

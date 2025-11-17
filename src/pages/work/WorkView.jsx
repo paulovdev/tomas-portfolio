@@ -281,7 +281,7 @@ const WorkView = () => {
                           className="w-full h-[350px] object-cover brightness-100 group-hover:brightness-75 transition-all max-ds:h-[315px] max-lg:h-[250px] max-md:h-[175px]"
                         />
                       )}
-                      <h3 className="mt-2 text-p font-semibold">
+                      <h3 className="mt-2 text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
                         {proj.title}
                       </h3>
                     </div>
