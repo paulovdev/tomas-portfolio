@@ -93,25 +93,43 @@ const ProjectDescription = ({ project, projectModal, setProjectModal }) => {
               </div>
 
               <div className="pb-10 flex items-end justify-end">
-                <div className="w-full flex items-start justify-between">
-                  <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
+                <div className="w-full flex flex-col items-start justify-between">
+                  <p className="mb-4 text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                     Information
                   </p>
                   <ul>
                     <li className="flex items-center gap-2">
-                      <p className="text-p/75 text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
+                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
                         Year:
                       </p>
                       <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
                         {project.year}
                       </p>
                     </li>
+                    {project.website ? (
+                      <li className="flex items-center gap-2">
+                        <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
+                          Website:
+                        </p>
+                        <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
+                          {project.website}
+                        </p>
+                      </li>
+                    ) : null}
                     <li className="flex items-center gap-2">
-                      <p className="text-p/75 text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
-                        Website:
+                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
+                        Client:
                       </p>
                       <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
-                        {project.website}
+                        {project.client}
+                      </p>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.03em]">
+                        Services:
+                      </p>
+                      <p className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
+                        {project.services}
                       </p>
                     </li>
                   </ul>

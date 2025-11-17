@@ -14,7 +14,7 @@ const Footer = () => {
         </p>
         <div className="flex items-center ">
           <a
-            href=""
+            href="https://www.instagram.com/im_tomasml/"
             target="_blank"
             className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em] ml-1 hover:underline"
           >
@@ -28,7 +28,7 @@ const Footer = () => {
             Linkedin,
           </a>
           <a
-            href=""
+            href="https://www.behance.net/tomasml"
             target="_blank"
             className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em] ml-1 hover:underline"
           >
@@ -60,7 +60,7 @@ const Footer = () => {
 
           <div className="flex items-center ">
             <a
-              href=""
+              href="https://www.instagram.com/im_tomasml/"
               target="_blank"
               className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em] ml-1 hover:underline"
             >
@@ -74,7 +74,7 @@ const Footer = () => {
               Linkedin,
             </a>
             <a
-              href=""
+              href="https://www.behance.net/tomasml"
               target="_blank"
               className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em] ml-1 hover:underline"
             >

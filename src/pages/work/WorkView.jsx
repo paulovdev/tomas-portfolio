@@ -139,6 +139,9 @@ const WorkView = () => {
       const project = await client.fetch(
         `*[_type == "works" && slug.current == $slug][0]{
         title,
+        description,
+        year,
+        website,
         "slug": slug.current,
          
         media[] {

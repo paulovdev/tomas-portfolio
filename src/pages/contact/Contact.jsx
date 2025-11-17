@@ -16,7 +16,11 @@ const Contact = () => {
     {
       label: "Socials",
       value: ["Instagram", "Linkedin", "Behance"],
-      links: ["#", "https://www.linkedin.com/in/tomasmedinaleon/", "#"],
+      links: [
+        "https://www.instagram.com/im_tomasml/",
+        "https://www.linkedin.com/in/tomasmedinaleon/",
+        "https://www.behance.net/tomasml",
+      ],
     },
     {
       label: "Email",
