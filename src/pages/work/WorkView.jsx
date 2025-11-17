@@ -142,6 +142,8 @@ const WorkView = () => {
         description,
         year,
         website,
+        client,
+        services,
         "slug": slug.current,
          
         media[] {
