@@ -71,7 +71,7 @@ const Contact = () => {
                 return (
                   <p
                     key={i}
-                    className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]"
+                    className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]"
                   >
                     {info.value.map((item, idx) => (
                       <a
@@ -93,7 +93,7 @@ const Contact = () => {
                 return (
                   <p
                     key={i}
-                    className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]"
+                    className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]"
                   >
                     <a href={info.href} className="hover:underline">
                       {info.value}
@@ -106,7 +106,7 @@ const Contact = () => {
               return (
                 <p
                   key={i}
-                  className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-semibold tracking-[-0.03em]"
+                  className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]"
                 >
                   {info.value}
                 </p>
@@ -117,7 +117,7 @@ const Contact = () => {
 
         {/* Footer + Modal */}
         <div className="w-full flex-1 flex items-end">
-          <p className="relative bottom-4 w-full px-4 text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-bold tracking-[-0.05em] max-md:absolute max-md:bottom-4">
+          <p className="relative bottom-4 w-full px-4 text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.05em] max-md:absolute max-md:bottom-4">
             ©T—ML 2025
           </p>
           <AnimatePresence>
