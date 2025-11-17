@@ -44,14 +44,14 @@ const ContactModal = ({ setShowNewsletter }) => {
 
     try {
       await emailjs.send(
-        "service_q66a7te",
-        "template_ash6cza",
+        "service_n2crrfz",
+        "template_j26tpv4",
         {
           from_name: form.name,
           from_email: form.email,
           message: form.message,
         },
-        "0j6AC4QElZ7rF8zIB"
+        "S_6_wsbrL9uhX5TIV"
       );
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
