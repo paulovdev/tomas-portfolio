@@ -68,7 +68,7 @@ const About = () => {
                   {items.map((item, i) => (
                     <li
                       key={i}
-                      className="mb-2 text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  font-semibold tracking-[-0.03em]"
+                      className="mb-2 text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  font-medium tracking-[-0.03em]"
                     >
                       {item}
                     </li>
@@ -87,7 +87,7 @@ const About = () => {
                 {items.map((item, i) => (
                   <li
                     key={i}
-                    className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  font-semibold tracking-[-0.03em]"
+                    className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]"
                   >
                     {item}
                   </li>
