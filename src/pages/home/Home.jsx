@@ -110,7 +110,7 @@ const Home = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Tomás — Home</title>
+        <title>T—ML | Branding & Visual Identity Designer</title>
         <meta
           name="description"
           content="Hi, I’m Tomás, a graphic designer based in the Canary Islands..."
