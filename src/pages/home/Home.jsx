@@ -5,6 +5,10 @@ import HomeNav from "../../components/navs/HomeNav";
 import { useHomeStore } from "../../store/useHomeStore";
 import { Helmet } from "react-helmet";
 
+import { urlFor } from "../../lib/sanityImage";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const AnimatedLetters = ({ text }) => {
   return (
     <motion.span
@@ -53,6 +57,7 @@ const Home = () => {
 
   const { media, setMedia } = useHomeStore();
 
+  // Fetch Sanity
   useEffect(() => {
     if (media) return;
 
@@ -76,6 +81,7 @@ const Home = () => {
     fetchHome();
   }, [media, setMedia]);
 
+  // Slideshow automático
   useEffect(() => {
     if (!media || media.length === 0) return;
 
@@ -93,11 +99,12 @@ const Home = () => {
 
   const isLCP = index === 0;
 
-  const imageProps = isLCP
-    ? { loading: "eager", fetchpriority: "high" }
-    : { loading: "lazy" };
-
-  const videoProps = isLCP ? { preload: "auto", fetchpriority: "high" } : {};
+  // ─────────────────────────────────────────────
+  // ✅ URL otimizada do Sanity
+  // ─────────────────────────────────────────────
+  const imageUrl = !isVideo
+    ? urlFor(current.asset).width(2000).quality(80).auto("format").url()
+    : null;
 
   return (
     <>
@@ -106,17 +113,17 @@ const Home = () => {
         <title>Tomás — Home</title>
         <meta
           name="description"
-          content="Hi, I’m Tomás, a graphic designer based in the Canary Islands. I specialize in brand strategy, art direction, and digital design, creating functional and contemporary identities with intent."
+          content="Hi, I’m Tomás, a graphic designer based in the Canary Islands..."
         />
       </Helmet>
 
       <HomeNav />
 
-      <div
-        className="relative h-svh bg-[#F0EEE6]
-        max-md:h-[calc(var(--vh)*100)] w-full overflow-hidden"
-      >
+      <div className="relative h-svh bg-[#F0EEE6] max-md:h-[calc(var(--vh)*100)] w-full overflow-hidden">
         <AnimatePresence mode="sync">
+          {/* ─────────────────────────────────────────────
+              VIDEO
+          ───────────────────────────────────────────── */}
           {isVideo ? (
             <motion.video
               key={current.asset._id}
@@ -126,25 +133,39 @@ const Home = () => {
               muted
               loop
               playsInline
-              {...videoProps}
+              preload={isLCP ? "auto" : "metadata"}
+              fetchpriority={isLCP ? "high" : undefined}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, transition: { duration: 0.5 } }}
             />
           ) : (
-            <motion.img
+            /* ─────────────────────────────────────────────
+               IMAGEM — Lazy + Sanity urlFor
+            ───────────────────────────────────────────── */
+            <motion.div
               key={current.asset._id}
-              src={current.asset.url}
-              alt={current.alt || ""}
-              className="absolute inset-0 w-full h-screen object-cover"
-              {...imageProps}
+              className="absolute inset-0 w-full h-screen"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, transition: { duration: 0.5 } }}
-            />
+            >
+              <LazyLoadImage
+                src={imageUrl}
+                alt={current.alt || ""}
+                effect="blur"
+                wrapperClassName="absolute inset-0 w-full h-full"
+                className="w-full h-full object-cover"
+                loading={isLCP ? "eager" : "lazy"}
+                fetchpriority={isLCP ? "high" : undefined}
+              />
+            </motion.div>
           )}
         </AnimatePresence>
 
+        {/* ─────────────────────────────────────────────
+            LOADING SCREEN ANIMADO
+        ───────────────────────────────────────────── */}
         {!loadingDone && (
           <motion.div
             className="absolute inset-0 flex flex-col justify-center items-center bg-[#F0EEE6] z-200"
@@ -153,7 +174,7 @@ const Home = () => {
             transition={{ delay: 1.5, duration: 0.5, ease: "easeInOut" }}
             onAnimationComplete={() => setLoadingDone(true)}
           >
-            <h1 className="text-[1em] font-medium text-p tracking-[-0.05em] max-md:tracking-[-0.05em] select-none flex flex-wrap">
+            <h1 className="text-[1em] font-medium text-p tracking-[-0.05em] select-none flex flex-wrap">
               <AnimatedLetters text="Tomás — Branding & Visual Identity Designer" />
             </h1>
 
