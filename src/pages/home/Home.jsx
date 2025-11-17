@@ -177,13 +177,6 @@ const Home = () => {
             <h1 className="text-[1em] font-medium text-p tracking-[-0.05em] select-none flex flex-wrap">
               <AnimatedLetters text="Tomás — Branding & Visual Identity Designer" />
             </h1>
-
-            <motion.div
-              className="absolute bottom-0 left-0 h-1 bg-black"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1, delay: 0.15 }}
-            />
           </motion.div>
         )}
       </div>
