@@ -1,70 +1,39 @@
 import { useEffect, useState } from "react";
 
-const timeZones = [
-  { label: "Canary Islands", zone: "Atlantic/Canary" },
-  { label: "Lisbon", zone: "Europe/Lisbon" },
-  { label: "London", zone: "Europe/London" },
-  { label: "Madrid", zone: "Europe/Madrid" },
-  { label: "New York", zone: "America/New_York" },
-  { label: "Chicago", zone: "America/Chicago" },
-  { label: "Denver", zone: "America/Denver" },
-  { label: "Los Angeles", zone: "America/Los_Angeles" },
-  { label: "Mexico City", zone: "America/Mexico_City" },
-  { label: "Buenos Aires", zone: "America/Argentina/Buenos_Aires" },
-  { label: "Sao Paulo", zone: "America/Sao_Paulo" },
-  { label: "Tokyo", zone: "Asia/Tokyo" },
-  { label: "Beijing", zone: "Asia/Shanghai" },
-  { label: "Dubai", zone: "Asia/Dubai" },
-  { label: "Sydney", zone: "Australia/Sydney" },
-  { label: "Cape Verde", zone: "Atlantic/Cape_Verde" },
-];
-
 const Clock = () => {
-  const [times, setTimes] = useState({});
+  const [time, setTime] = useState("");
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
-    const updateClocks = () => {
-      const newTimes = {};
-
-      timeZones.forEach(({ label, zone }) => {
-        newTimes[label] = new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: isAMPM(zone),
-          timeZone: zone,
-        });
+    const updateClock = () => {
+      const formatted = new Date().toLocaleTimeString("default", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: usesAMPM(userTimeZone),
+        timeZone: userTimeZone,
       });
 
-      setTimes(newTimes);
+      setTime(formatted);
     };
 
-    updateClocks();
-    const interval = setInterval(updateClocks, 1000);
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [userTimeZone]);
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-      {Object.entries(times).map(([label, time]) => (
-        <div key={label}>
-          <strong>{label}: </strong> {time}
-        </div>
-      ))}
-    </div>
-  );
+  return <div>{time}</div>;
 };
 
- 
-function isAMPM(timeZone) {
-  const locale = new Intl.Locale("en-US");
-  const test = new Date().toLocaleTimeString(locale, {
+// Detecta se o timezone usa AM/PM
+function usesAMPM(zone) {
+  const test = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
     hour12: undefined,
-    timeZone,
+    timeZone: zone,
   });
 
-  return test.match(/AM|PM/i) !== null;
+  return /AM|PM/i.test(test);
 }
 
 export default Clock;
