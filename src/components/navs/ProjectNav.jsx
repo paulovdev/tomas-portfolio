@@ -104,7 +104,7 @@ const ProjectNav = () => {
 
         <div className="w-full flex justify-end max-md:hidden">
           <span className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-semibold tracking-[-0.03em] uppercase flex items-center gap-1">
-            <Clock /> WET
+            <Clock />
           </span>
         </div>
       </nav>
