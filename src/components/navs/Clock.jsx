@@ -6,13 +6,18 @@ const Clock = () => {
 
   useEffect(() => {
     const updateClock = () => {
-      const formatted = new Date().toLocaleTimeString("default", {
+      let formatted = new Date().toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         hour12: usesAMPM(userTimeZone),
         timeZone: userTimeZone,
       });
+
+      // Remove pontos no AM/PM (a.m. → AM / p.m. → PM)
+      formatted = formatted
+        .replace(/a\.?m\.?/i, "AM")
+        .replace(/p\.?m\.?/i, "PM");
 
       setTime(formatted);
     };
@@ -25,7 +30,6 @@ const Clock = () => {
   return <div>{time}</div>;
 };
 
-// Detecta se o timezone usa AM/PM
 function usesAMPM(zone) {
   const test = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -33,7 +37,7 @@ function usesAMPM(zone) {
     timeZone: zone,
   });
 
-  return /AM|PM/i.test(test);
+  return /AM|PM|a\.?m\.?|p\.?m\.?/i.test(test);
 }
 
 export default Clock;
