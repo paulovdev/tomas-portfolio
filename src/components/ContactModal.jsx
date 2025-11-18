@@ -74,12 +74,12 @@ const ContactModal = ({ setShowNewsletter }) => {
         {...opacityAnim}
       >
         <div className="mb-12 w-full flex items-center justify-between">
-          <p className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em]">
+          <p className="text-p  text-[.9em]  max-lg:text-[.93em]     font-medium tracking-[-0.03em]">
             Let's talk
           </p>
           <button
             onClick={() => setShowNewsletter(false)}
-            className="text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em]"
+            className="text-p  text-[.9em]  max-lg:text-[.93em]     font-medium tracking-[-0.03em]"
           >
             Close
           </button>
@@ -96,7 +96,7 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="Name"
               value={form.name}
               onChange={handleChange}
-              className="mb-4 w-full border-b border-p/25 text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="mb-4 w-full border-b border-p/25 text-p  text-[.9em]  max-lg:text-[.93em]     font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
 
             <input
@@ -105,7 +105,7 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="E-mail"
               value={form.email}
               onChange={handleChange}
-              className="mb-4 w-full border-b border-p/25 text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="mb-4 w-full border-b border-p/25 text-p  text-[.9em]  max-lg:text-[.93em]     font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
 
             <textarea
@@ -114,19 +114,19 @@ const ContactModal = ({ setShowNewsletter }) => {
               placeholder="Message"
               value={form.message}
               onChange={handleChange}
-              className="w-full h-[50px] border-b border-p/25 text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
+              className="w-full h-[50px] border-b border-p/25 text-p  text-[.9em]  max-lg:text-[.93em]     font-medium tracking-[-0.03em] bg-transparent outline-none placeholder:text-p"
             />
           </div>
           <div className="mb-8 relative flex flex-col items-end justify-end">
             <button
               type="submit"
-              className="mb-2 w-full text-p  text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
+              className="mb-2 w-full text-p  text-[.9em]  max-lg:text-[.93em]     font-medium tracking-[-0.03em] bg-transparent outline-none text-start"
             >
               Send
             </button>
             {status === "sending" && (
               <motion.p
-                className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-medium tracking-[-0.03em]"
+                className="text-p text-[.9em]  max-lg:text-[.93em]   font-medium tracking-[-0.03em]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -136,7 +136,7 @@ const ContactModal = ({ setShowNewsletter }) => {
             )}
             {status === "success" && (
               <motion.p
-                className="text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-medium tracking-[-0.03em]"
+                className="text-p text-[.9em]  max-lg:text-[.93em]   font-medium tracking-[-0.03em]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -146,7 +146,7 @@ const ContactModal = ({ setShowNewsletter }) => {
             )}
             {status === "error" && (
               <motion.p
-                className="text-red-500 text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-medium tracking-[-0.03em]"
+                className="text-red-500 text-[.9em]  max-lg:text-[.93em]   font-medium tracking-[-0.03em]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}

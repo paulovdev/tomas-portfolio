@@ -124,7 +124,7 @@ const Works = () => {
                     <div className="w-full h-[500px] bg-[#E5E3DC] max-ds:h-[350px] max-lg:h-[250px] max-md:h-[275px]" />
                   )}
 
-                  <h2 className="mt-2 text-p text-[.9em] max-lg:text-[.95em] max-md:text-[1em] font-normal tracking-[-0.03em]">
+                  <h2 className="mt-2 text-p text-[.9em]  max-lg:text-[.93em]   font-normal tracking-[-0.03em]">
                     {work.title}
                   </h2>
                 </div>

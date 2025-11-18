@@ -29,7 +29,7 @@ const ProjectNav = () => {
         <div className="flex justify-start max-md:hidden">
           <Link
             to="/"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em] truncate"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em] truncate"
           >
             T—ML
           </Link>
@@ -38,19 +38,19 @@ const ProjectNav = () => {
         <div className="flex justify-start gap-1 max-md:hidden">
           <Link
             to="/works"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]    text-s font-normal tracking-[-0.03em]"
           >
             Work,
           </Link>
           <Link
             to="/about"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em] text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em]"
           >
             About,
           </Link>
           <Link
             to="/contact"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]    text-s font-normal tracking-[-0.03em]"
           >
             Contact
           </Link>
@@ -59,25 +59,25 @@ const ProjectNav = () => {
         <div className="max-md:flex justify-center gap-1 hidden">
           <Link
             to="/"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]"
           >
             T—ML,
           </Link>
           <Link
             to="/works"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]    text-s font-normal tracking-[-0.03em]"
           >
             Work,
           </Link>
           <Link
             to="/about"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]"
           >
             About,
           </Link>
           <Link
             to="/contact"
-            className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em]"
+            className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]"
           >
             Contact
           </Link>
@@ -86,15 +86,15 @@ const ProjectNav = () => {
         <div className="flex justify-center">
           {isWorkDetail && project ? (
             <div className="w-full flex items-center gap-1">
-              <span className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em]">
+              <span className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em]">
                 {project.title}
               </span>
-              <span className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.15em]">
+              <span className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.15em]">
                 —
               </span>
               <button
                 onClick={() => setProjectModal(true)}
-                className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em] text-s font-normal tracking-[-0.03em] cursor-pointer"
+                className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em] cursor-pointer"
               >
                 Information
               </button>
@@ -103,7 +103,7 @@ const ProjectNav = () => {
         </div>
 
         <div className="w-full flex justify-end max-md:hidden">
-          <span className=" text-[.9em] max-lg:text-[.95em] max-md:text-[1em]  text-s font-normal tracking-[-0.03em] uppercase flex items-center gap-1">
+          <span className=" text-[.9em]  max-lg:text-[.93em] max-md:text-[1em]   text-s font-normal tracking-[-0.03em] uppercase flex items-center gap-1">
             <Clock />
           </span>
         </div>
