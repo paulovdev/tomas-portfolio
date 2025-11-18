@@ -11,8 +11,8 @@ const Nav = () => {
       pathname === "/contact"
     ) {
       return pathname === href
-        ? "text-s! max-md:text-s/50!"
-        : "text-s/50! max-md:text-s!";
+        ? "text-s max-md:text-s/50!"
+        : "text-s/50 max-md:text-s!";
     }
     return pathname === href ? "text-s" : "text-s/50";
   };
